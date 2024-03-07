@@ -41,8 +41,11 @@ export default {
         name:"Home"
       })
     }
-    function onCreateBoard(){
-
+    async function onCreateBoard(){
+      await axios.post('/api/board/create',{
+        title:title.value,
+        content:content.value,
+      })
     }
     return{
       title,

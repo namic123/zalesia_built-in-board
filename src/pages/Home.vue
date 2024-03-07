@@ -1,9 +1,11 @@
 <template>
   <div class="board-container home-container pt-10">
     <section>
-      <div class="home-create-section">
+      <div class="home-header-section">
         <button class="mt-5" @click="moveToCreate">Add new board</button>
+        <button class="mt-5" @click="moveToLogin">Login</button>
       </div>
+
       <div>
         <div></div>
       </div>
@@ -21,8 +23,12 @@ export default {
     const router = useRouter();
     const moveToCreate = () => {
       router.push({
-        name: 'PageBoardCreate',
-      })
+        name: 'BoardCreate',
+      });
+      const moveToLogin = () => {
+      router.push({
+        name: 'MemberLogin',
+      });
     }
     return {
       moveToCreate,
@@ -44,7 +50,7 @@ section {
   flex-direction: column;
 }
 
-.home-create-section {
+.home-header-section {
   width: 100%;
   display: flex;
   justify-content: flex-end;

@@ -1,6 +1,6 @@
 import {createRouter, createWebHistory} from "vue-router";
-import Home from '@/pages/PageHome.vue';
-import PageBoardCreate from '@/pages/board/PageBoardCreate.vue'
+import Home from '@/pages/Home.vue';
+import BoardCreate from '@/pages/board/BoardCreate.vue'
 
 const router = createRouter({
     history:createWebHistory(),
@@ -12,8 +12,8 @@ const router = createRouter({
         },
         {
             path:'/board/create',
-            name:'PageBoardCreate',
-            component:PageBoardCreate,
+            name:'BoardCreate',
+            component:BoardCreate,
         }
     ]
 })
