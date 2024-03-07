@@ -4,7 +4,7 @@
       <h1 class="text-white">게시글 쓰기</h1>
     </header>
     <section>
-      <form class="board-create-form" action="">
+      <form class="board-create-form" @submit.prevent="onCreateBoard">
         <div class="board-create-content">
           <input
               type="text"
@@ -13,11 +13,11 @@
           >
         </div>
         <div class="board-create-content">
-          <textarea placeholder="내용을 입력해주세요."/>
+          <textarea placeholder="내용을 입력해주세요." v-model="content"/>
         </div>
         <div class="board-create-content justify-end">
-          <button class="bg-blue-600" @click="createBoard">저장</button>
-          <button class="bg-red-600" @click="moveToHome">취소</button>
+          <button type="submit" class="bg-blue-600">저장</button>
+          <button type="button" class="bg-red-600" @click="moveToHome">취소</button>
         </div>
       </form>
     </section>
@@ -26,7 +26,7 @@
 <script>
 import {useRouter} from "vue-router";
 import {ref} from "vue";
-
+import axios from "axios";
 export default {
   setup(){
     // 필드
@@ -34,16 +34,21 @@ export default {
     const title = ref("");
     const content = ref("");
 
+    // 메소드
     // 홈으로 이동
     function moveToHome(){
       router.push({
         name:"Home"
       })
     }
+    function onCreateBoard(){
+
+    }
     return{
       title,
       content,
-      moveToHome
+      moveToHome,
+      onCreateBoard,
     }
   }
 }
