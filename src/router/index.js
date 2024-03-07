@@ -12,15 +12,20 @@ const router = createRouter({
             component:Home
         },
         {
+            path:'/board/create',
+            name:'BoardCreate',
+            component:BoardCreate,
+        },
+        {
             path:'/member/login',
             name:'MemberLogin',
             component:MemberLogin
         },
         {
-            path:'/board/create',
-            name:'BoardCreate',
-            component:BoardCreate,
-        }
+            path:'/member/signup',
+            name:'MemberSignUp',
+            component:MemberSignUp,
+        },
     ]
 })
 

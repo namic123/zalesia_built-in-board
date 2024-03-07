@@ -8,42 +8,50 @@
           <input type="password" placeholder="비밀번호를 입력해주세요">
         </div>
         <div>
-        <button type="submit" class="bg-blue-600 text-white">로그인</button>
+          <button type="submit" class="bg-blue-600 text-white">로그인</button>
         </div>
       </form>
     </div>
     <div class="member-login-footer mt-2">
-      <button >비밀번호 찾기</button>
+      <button>비밀번호 찾기</button>
       <button>아이디 찾기</button>
-      <button >회원 가입</button>
+      <button @click="moveToSignUp">회원 가입</button>
     </div>
   </div>
 </template>
 <script>
+import {useRouter} from "vue-router";
+
 export default {
-  setup(){
-
-    return{
-
+  setup() {
+    const router = useRouter();
+    function moveToSignUp(){
+      router.push({
+        name:"MemberSignUp",
+      })
+    }
+    return {
+      moveToSignUp
     }
   }
 }
 </script>
 
 <style scoped>
-button{
+button {
   border-radius: 1rem;
   padding: 0rem 0.5rem;
   font-weight: bold;
-  color:white;
+  color: white;
 }
+
 .member-login-container {
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height:80%;
+  height: 80%;
 }
 
 
@@ -54,7 +62,7 @@ button{
   align-items: center;
   border: 1px solid white;
   border-radius: 1rem;
-  padding:2rem 5rem;
+  padding: 2rem 5rem;
 }
 
 .member-login-form h1 {
@@ -63,23 +71,23 @@ button{
   font-size: 2rem;
 }
 
-.member-login-form > form > div{
+.member-login-form > form > div {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top:1rem;
+  margin-top: 1rem;
 }
 
-.member-login-form input{
-  padding:0rem 1rem;
+.member-login-form input {
+  padding: 0rem 1rem;
   margin-bottom: 0.5rem;
   height: 2.2rem;
   min-width: 300px;
   border-radius: 1rem;
 }
 
-.member-login-footer > button:nth-child(2){
+.member-login-footer > button:nth-child(2) {
   border-left: 1px solid white;
   border-right: 1px solid white;
   border-radius: 0;
