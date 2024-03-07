@@ -2,6 +2,7 @@ import {createRouter, createWebHistory} from "vue-router";
 import Home from '@/pages/PageHome.vue';
 import BoardCreate from '@/pages/board/BoardCreate.vue'
 import MemberLogin from "@/pages/member/MemberLogin.vue";
+import MemberSignUp from "@/pages/member/MemberSignUp.vue";
 
 const router = createRouter({
     history:createWebHistory(),

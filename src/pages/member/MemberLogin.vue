@@ -1,5 +1,5 @@
 <template>
-  <div class="member-login-container">
+  <div class="default-style-container member-login-container">
     <div class="member-login-form">
       <h1>Zalesia</h1>
       <form @submit.prevent="">
@@ -46,11 +46,8 @@ button {
 }
 
 .member-login-container {
-  width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
   height: 80%;
 }
 

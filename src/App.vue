@@ -26,6 +26,14 @@ body{
 }
 .container{
   width: 100%;
+  color:white;
+}
+.default-style-container{
+  width:100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
 }
 .navigator{
   display:flex;
@@ -37,7 +45,6 @@ body{
   font-weight: bold;
   color: white;
 }
-.board-container{
-  width:100%;
-}
+
+
 </style>
