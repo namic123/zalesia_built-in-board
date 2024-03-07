@@ -25,13 +25,15 @@ export default {
       router.push({
         name: 'BoardCreate',
       });
-      const moveToLogin = () => {
+    }
+    const moveToLogin = () => {
       router.push({
         name: 'MemberLogin',
       });
     }
     return {
       moveToCreate,
+      moveToLogin,
     }
   }
 }
