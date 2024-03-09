@@ -17,7 +17,9 @@
       <button>아이디 찾기</button>
       <button @click="signupModalHandler">회원 가입</button>
     </div>
+    <Transition name="modal">
       <MemberSignUp v-if="signupModal" @onCloseModal="signupModalHandler"/>
+    </Transition>
   </div>
 </template>
 <script>
@@ -103,5 +105,12 @@ button {
   border-radius: 0;
 }
 
-
+.modal-enter-active,
+.modal-leave-active{
+  transition: opacity 0.3s ease;
+}
+.modal-enter-from,
+.modal-leave-to{
+  opacity: 0;
+}
 </style>

@@ -69,7 +69,7 @@ export default {
   height: 100vh;
   position: fixed;
   z-index: 100;
-  background: black;
+  background: rgba(0,0,0,0.6);
 }
 
 /* 폼 컨테이너 */
