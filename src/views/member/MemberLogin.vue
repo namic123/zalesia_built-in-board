@@ -15,16 +15,21 @@
     <div class="member-login-footer mt-2">
       <button>비밀번호 찾기</button>
       <button>아이디 찾기</button>
-      <button @click="moveToSignUp">회원 가입</button>
+      <button @click="onOpenSignupModal">회원 가입</button>
     </div>
   </div>
 </template>
 <script>
 import {useRouter} from "vue-router";
+import {ref} from "vue";
 
 export default {
   setup() {
     const router = useRouter();
+    const onOpen = ref(false);
+    function onOpenSignupModal(){
+
+    }
     function moveToSignUp(){
       router.push({
         name:"MemberSignUp",

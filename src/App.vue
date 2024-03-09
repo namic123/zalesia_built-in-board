@@ -1,5 +1,5 @@
 <template>
-  <div class="container h-screen">
+  <div class="container h-screen w-screen">
     <nav class="navigator">
       <h1 class="text-white">
         Zalesia
@@ -24,9 +24,12 @@
 body{
   background-color: #1e293b;
 }
+
 .container{
-  width: 100%;
+  width:100%;
   color:white;
+  border:1px solid red;
+  margin:0 auto;
 }
 .default-style-container{
   width:100%;
