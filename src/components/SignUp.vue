@@ -34,7 +34,7 @@
         <!-- 이메일 -->
         <div>
           <label>이메일</label>
-          <input type="email" placeholder="이메일 입력" v-model="email">
+          <input type="email" placeholder="이메일 입력" v-model="email" >
           <div v-if="isValidateEmailSuccess" class="success">사용 가능한 이메일입니다</div>
           <div v-if="isValidateEmail" class="errors">{{ emailErrorMessage }}</div>
           <button
@@ -50,21 +50,21 @@
         <!-- 아이디 -->
         <div>
           <label>아이디</label>
-          <input type="text" placeholder="아이디 입력" v-model="id" @input="updateId($event)">
-          <div v-if="isValidateIdSuccess" class="success">사용 가능한 아이디입니다.</div>
-          <div v-if="isValidateId " class="errors">{{ idErrorMessage }}</div>
+          <input type="text" placeholder="아이디 입력" v-model="memberId" @input="updateMemberId($event)">
+          <div v-if="isValidateMemberIdSuccess" class="success">사용 가능한 아이디입니다.</div>
+          <div v-if="isValidateMemberId" class="errors">{{ memberIdErrorMessage }}</div>
           <button
-              v-if="!isValidateIdSuccess"
-              v-bind:disabled="isValidateId"
-              @click="checkIdDuplicates"
+              v-if="!isValidateMemberIdSuccess"
+              v-bind:disabled="isValidateMemberId"
+              @click="checkMemberIdDuplicates"
           >중복확인
           </button>
         </div>
         <!-- 비밀번호 -->
         <div>
           <label>비밀번호</label>
-          <input type="password" placeholder="비밀번호 입력" v-model="password">
-          <input type="password" placeholder="비밀번호 재확인" v-model="passwordCheck">
+          <input type="password" placeholder="비밀번호 입력" v-model="password" @input="updatePassword($event)">
+          <input type="password" placeholder="비밀번호 재확인" v-model="passwordCheck" @input="updatePasswordCheck($event)">
           <div v-if="comparePasswords" class="errors">비밀번호가 일치하지 않습니다</div>
           <div v-if="checkPasswordLength" class="errors">{{ password.length === 0 ? "" : "8자 이상 입력이 필요합니다" }}</div>
           <div v-if="isValidatePassword" class="errors">8자 이상, 영문자, 숫자, 특수문자를</div>
@@ -97,39 +97,70 @@
 
 import {computed, ref, watch} from "vue";
 import axios from "axios";
-
+import Swal from "sweetalert2";
 
 const emit = defineEmits(['onCloseModal']);
 /*------------------------ 상태 영역 --------------------------------------*/
 let name = ref("");
 let nickname = ref("");
 let email = ref("");
-let id = ref("");
+let memberId = ref("");
 let password = ref("");
 let passwordCheck = ref("");
 // 중복 여부 상태
 let isNicknameDuplicated = ref(false);
 let isEmailDuplicated = ref(false);
-let isIdDuplicated = ref(false);
+let isMemberIdDuplicated = ref(false);
 
 // 폼 별 패턴
 const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-const idPattern = /^(?=.*[a-z])[a-z0-9]+$/;
+const memberIdPattern = /^(?=.*[a-z])[a-z0-9]+$/;
 
 /* 폼 메세지 */
 /*------------ 유효성 검사 성공 메세지 -------------------------*/
 let isValidateNicknameSuccess = ref(false);
 let isValidatePasswordSuccess = ref(false);
 let isValidateEmailSuccess = ref(false);
-let isValidateIdSuccess = ref(false);
+let isValidateMemberIdSuccess = ref(false);
 let isValidateAllFormSuccess = computed(() => {
   // 모든 폼 검증이 성공적인지 여부를 반환
   return !(name.value.length > 0 &&
       isValidateNicknameSuccess.value &&
       isValidateEmailSuccess.value &&
-      isValidateIdSuccess.value &&
+      isValidateMemberIdSuccess.value &&
       isValidatePasswordSuccess.value)
 });
+/*------------ 공백 제거 -----------------------------*/
+function removeSpaces(value, target) {
+  target.value = value.replace(/\s+/g, '');
+}
+
+// 한글 입력은 조합형 입력이므로, 키보드에서 키를 누를때마다 바로 입력이 확정되지 않는다.
+// 따라서, v-model이 입력중인 조합형 문자를 바로 반영 못하는 문제가 있으므로, 아래 메서드와 같이 바로 반영
+function updateName(event) {
+  name.value = event.target.value;
+  removeSpaces(event.target.value, name);
+
+}
+
+function updateNickname(event) {
+  nickname.value = event.target.value;
+  removeSpaces(event.target.value, nickname);
+
+}
+function updateMemberId(event) {
+  memberId.value = event.target.value;
+  removeSpaces(event.target.value, memberId);
+}
+
+
+function updatePassword(event) {
+  removeSpaces(event.target.value, password);
+}
+
+function updatePasswordCheck(event) {
+  removeSpaces(event.target.value, passwordCheck);
+}
 
 /*------------ 유효성 검사 에러 메세지 -------------------------*/
 // 닉네임 에러메세지 설정
@@ -145,15 +176,16 @@ let nicknameErrorMessage = computed(() => {
 });
 
 // 아이디 에러메세지 설정
-let idErrorMessage = computed(() => {
-  if (id.value.length === 0) {
+let memberIdErrorMessage = computed(() => {
+  if (memberId.value.length === 0) {
     return "";
-  } else if (id.value.length < 5 || !idPattern.test(id.value)) {
-    return "5자 이상 영문 소문자, 숫자만 포함";
-  } else if (isIdDuplicated.value) {
+  } else if (isMemberIdDuplicated.value) {
     return "이미 존재하는 아이디입니다.";
+  } else if (memberId.value.length < 5 || !memberIdPattern.test(memberId.value)) {
+    return "5자 이상 영문 소문자, 숫자만 포함";
+  } else {
+    return "";
   }
-  return "";
 });
 
 let emailErrorMessage = computed(() => {
@@ -183,8 +215,8 @@ let isValidateEmail = computed(() => {
   return !emailPattern.test(email.value) || isEmailDuplicated.value;
 });
 // 아이디 형식 검증
-let isValidateId = computed(() => {
-  return !idPattern.test(id.value) || (id.value.length < 5);
+let isValidateMemberId = computed(() => {
+  return !memberIdPattern.test(memberId.value) || (memberId.value.length < 5) || isMemberIdDuplicated.value;
 })
 // 비밀번호와 재확인 비교
 let comparePasswords = computed(() => {
@@ -201,20 +233,6 @@ let isValidatePassword = ref(false);
 
 function onCloseModal() {
   emit('onCloseModal');
-}
-
-// 한글 입력은 조합형 입력이므로, 키보드에서 키를 누를때마다 바로 입력이 확정되지 않는다.
-// 따라서, v-model이 입력중인 조합형 문자를 바로 반영 못하는 문제가 있으므로, 아래 메서드와 같이 바로 반영
-function updateName(e) {
-  name.value = e.target.value;
-}
-
-function updateNickname(e) {
-  nickname.value = e.target.value;
-}
-
-function updateId(e) {
-  id.value = e.target.value;
 }
 
 /*----------------- 중복확인 요청 -------------------------------*/
@@ -242,24 +260,24 @@ function checkNicknameDuplicates() {
 }
 
 // 닉네임 중복 체크
-function checkIdDuplicates() {
-  console.log(nickname.value);
+function checkMemberIdDuplicates() {
   axios.get('/api/member/check', {
     params: {
-      id: id.value,
+      memberId: memberId.value,
     }
   })
       .then((res) => {
+
         // 닉네임 사용 가능한 경우
         if (res.status === 200) {
-          isValidateIdSuccess.value = true;
-          isIdDuplicated.value = false; // 중복 없음
+          isValidateMemberIdSuccess.value = true;
+          isMemberIdDuplicated.value = false; // 중복 없음
         }
       })
       .catch((error) => {
-        console.log(error.response.status);
         if (error.response.status === 409) {
-          isIdDuplicated.value = true; // 중복 있음
+          console.log("아이디 중복됨");
+          isMemberIdDuplicated.value = true; // 중복 있음
         }
       });
 }
@@ -320,9 +338,9 @@ watch(email, () => {
   isValidateEmailSuccess.value = false;
   isEmailDuplicated.value = false;
 });
-watch(id, () => {
-  isValidateIdSuccess.value = false;
-  isIdDuplicated.value = false;
+watch(memberId, () => {
+  isValidateMemberIdSuccess.value = false;
+  isMemberIdDuplicated.value = false;
 });
 
 /* --------------------------- 계정 생성 ----------------------------------*/
@@ -332,10 +350,58 @@ function createMemberAccount() {
     name: name.value,
     nickname: nickname.value,
     email: email.value,
-    id: id.value,
+    memberId: memberId.value,
     password: password.value,
-  });
-}
+  })
+      .then(() => {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "회원가입이 완료되었습니다.",
+          confirmButtonText: "확인",
+          confirmButtonColor: "#0888ff",
+          showClass: {
+            popup: `
+      animate__animated
+      animate__fadeInUp
+      animate__faster
+    `
+          },
+          hideClass: {
+            popup: `
+      animate__animated
+      animate__fadeOutDown
+      animate__faster
+    `
+          }
+        });
+        onCloseModal();
+      })
+      .catch(() => {
+
+        Swal.fire({
+          position: "center",
+          icon: "danger",
+          title: "일시적인 오류가 발생했습니다. 잠시 후 시도해주세요.",
+          confirmButtonText: "확인",
+          confirmButtonColor: "red",
+          showClass: {
+            popup: `
+      animate__animated
+      animate__fadeInUp
+      animate__faster
+    `
+          },
+          hideClass: {
+            popup: `
+      animate__animated
+      animate__fadeOutDown
+      animate__faster
+    `
+          }
+        });
+      }
+      )}
 </script>
 
 <style scoped>
