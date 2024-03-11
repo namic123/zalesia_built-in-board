@@ -101,6 +101,7 @@ export default {
   border-radius: 1.5rem;
   padding-left: 1.5rem;
   margin-top: 1.5rem;
+  color:black;
 }
 
 .board-create-container textarea {

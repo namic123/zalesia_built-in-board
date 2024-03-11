@@ -1,6 +1,7 @@
 <template>
   <div class="container h-screen w-screen">
-    <nav class="navigator">
+    <nav class="navigator" >
+      l
       <h1 class="text-white">
         Zalesia
       </h1>
@@ -21,33 +22,5 @@
 </script>
 
 <style>
-body{
-  background-color: #1e293b;
-}
-
-.container{
-  width:100%;
-  color:white;
-  border:1px solid red;
-  margin:0 auto;
-}
-.default-style-container{
-  width:100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-}
-.navigator{
-  display:flex;
-  width:100%;
-  padding:1rem 2rem;
-}
-.navigator h1{
-  font-size: 2rem;
-  font-weight: bold;
-  color: white;
-}
-
-
+@import "assets/styles/default.css";
 </style>

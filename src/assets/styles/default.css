@@ -1,0 +1,40 @@
+body{
+    background-color: #1e293b;
+}
+
+.container{
+    width:100%;
+    color:white;
+    border:1px solid red;
+    margin:0 auto;
+}
+.default-style-container{
+    width:100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+.navigator{
+    display:flex;
+    width:100%;
+    padding:1rem 2rem;
+}
+.navigator h1{
+    font-size: 2rem;
+    font-weight: bold;
+    color: white;
+}
+
+/* 에러 스타일 */
+.errors {
+    font-size: 0.7rem;
+    font-weight: bold;
+    color: red;
+}
+
+.success {
+    font-size: 0.7rem;
+    font-weight: bold;
+    color: #029a02;
+}
