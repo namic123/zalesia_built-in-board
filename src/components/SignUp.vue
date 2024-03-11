@@ -34,7 +34,7 @@
         <!-- 이메일 -->
         <div>
           <label>이메일</label>
-          <input type="email" placeholder="이메일 입력" v-model="email" >
+          <input type="email" placeholder="이메일 입력" v-model="email">
           <div v-if="isValidateEmailSuccess" class="success">사용 가능한 이메일입니다</div>
           <div v-if="isValidateEmail" class="errors">{{ emailErrorMessage }}</div>
           <button
@@ -130,6 +130,7 @@ let isValidateAllFormSuccess = computed(() => {
       isValidateMemberIdSuccess.value &&
       isValidatePasswordSuccess.value)
 });
+
 /*------------ 공백 제거 -----------------------------*/
 function removeSpaces(value, target) {
   target.value = value.replace(/\s+/g, '');
@@ -148,6 +149,7 @@ function updateNickname(event) {
   removeSpaces(event.target.value, nickname);
 
 }
+
 function updateMemberId(event) {
   memberId.value = event.target.value;
   removeSpaces(event.target.value, memberId);
@@ -377,31 +379,55 @@ function createMemberAccount() {
         });
         onCloseModal();
       })
-      .catch(() => {
-
-        Swal.fire({
-          position: "center",
-          icon: "danger",
-          title: "일시적인 오류가 발생했습니다. 잠시 후 시도해주세요.",
-          confirmButtonText: "확인",
-          confirmButtonColor: "red",
-          showClass: {
-            popup: `
+      .catch((error) => {
+            if (error.response.status === 400) {
+              Swal.fire({
+                position: "center",
+                icon: "danger",
+                title: "잘못된 요청입니다.",
+                confirmButtonText: "확인",
+                confirmButtonColor: "red",
+                showClass: {
+                  popup: `
       animate__animated
       animate__fadeInUp
       animate__faster
     `
-          },
-          hideClass: {
-            popup: `
+                },
+                hideClass: {
+                  popup: `
       animate__animated
       animate__fadeOutDown
       animate__faster
     `
+                }
+              });
+            } else {
+              Swal.fire({
+                position: "center",
+                icon: "danger",
+                title: "일시적인 오류가 발생했습니다. 잠시 후 시도해주세요.",
+                confirmButtonText: "확인",
+                confirmButtonColor: "red",
+                showClass: {
+                  popup: `
+      animate__animated
+      animate__fadeInUp
+      animate__faster
+    `
+                },
+                hideClass: {
+                  popup: `
+      animate__animated
+      animate__fadeOutDown
+      animate__faster
+    `
+                }
+              });
+            }
           }
-        });
-      }
-      )}
+      )
+}
 </script>
 
 <style scoped>
