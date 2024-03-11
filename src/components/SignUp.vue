@@ -189,6 +189,7 @@ function checkNicknameDuplicates() {
           isValidateNicknameSuccess.value = true;
           isNicknameDuplicated.value = false; // 중복 없음
           //test
+          // test2
         }
 
       })
