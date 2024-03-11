@@ -23,17 +23,17 @@
     </section>
   </div>
 </template>
-<script>
+<script setup>
 import {useRouter} from "vue-router";
 import {ref} from "vue";
 import axios from "axios";
-export default {
-  setup(){
+import Swal from "sweetalert2";
+
     // 필드
     const router = useRouter();
     const title = ref("");
     const content = ref("");
-
+    const writer = ref("test5");
     // 메소드
     // 홈으로 이동
     function moveToHome(){
@@ -45,16 +45,11 @@ export default {
       await axios.post('/api/board/create',{
         title:title.value,
         content:content.value,
+        writer: writer.value,
+      }).then(()=>{
+        Swal.fire("board 생성!!");
       })
     }
-    return{
-      title,
-      content,
-      moveToHome,
-      onCreateBoard,
-    }
-  }
-}
 </script>
 <style scoped>
 .board-create-container {
