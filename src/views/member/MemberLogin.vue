@@ -13,8 +13,8 @@
       </form>
     </div>
     <div class="member-login-footer mt-2">
-      <button>비밀번호 찾기</button>
       <button>아이디 찾기</button>
+      <button>비밀번호 찾기</button>
       <button @click="signupModalHandler">회원 가입</button>
     </div>
     <Transition name="modal">
@@ -23,28 +23,21 @@
   </div>
 </template>
 <script>
-import {useRouter} from "vue-router";
 import MemberSignUp from "@/components/SignUp.vue";
 import {ref} from "vue";
 
 export default {
   components: {MemberSignUp},
   setup() {
-    const router = useRouter();
+
     const signupModal = ref(false);
 
     function signupModalHandler() {
       signupModal.value = !signupModal.value;
     }
 
-    function moveToSignUp() {
-      router.push({
-        name: "MemberSignUp",
-      })
-    }
-
     return {
-      moveToSignUp,
+
       signupModal,
       signupModalHandler,
     }
