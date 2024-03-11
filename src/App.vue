@@ -1,10 +1,11 @@
 <template>
   <div class="container h-screen w-screen">
     <nav class="navigator" >
-      l
+      <router-link to="/">
       <h1 class="text-white">
         Zalesia
       </h1>
+      </router-link>
     </nav>
     <router-view/>
   </div>
