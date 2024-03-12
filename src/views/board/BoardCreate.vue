@@ -83,7 +83,8 @@ function onCreateBoard() {
     writer: writer.value,
     uploadFiles: files.value,
   }).then(() => {
-    Swal.fire("board 생성!!");
+    Swal.fire("게시글이 생성되었습니다!");
+    moveToHome();
   })
 
 }
