@@ -4,7 +4,7 @@
       <h1 class="text-white">게시글 쓰기</h1>
     </header>
     <section>
-      <form class="board-create-form" @submit.prevent="onCreateBoard">
+      <form class="board-create-form">
         <div class="board-create-content">
           <input
               type="text"
@@ -16,7 +16,7 @@
           <textarea placeholder="내용을 입력해주세요." v-model="content"/>
         </div>
         <div class="board-create-content justify-end">
-          <button type="submit" class="bg-blue-600">저장</button>
+          <button type="button" class="bg-blue-600" @click="onCreateBoard">저장</button>
           <button type="button" class="bg-red-600" @click="moveToHome">취소</button>
         </div>
       </form>
@@ -29,27 +29,33 @@ import {ref} from "vue";
 import axios from "axios";
 import Swal from "sweetalert2";
 
-    // 필드
-    const router = useRouter();
-    const title = ref("");
-    const content = ref("");
-    const writer = ref("test5");
-    // 메소드
-    // 홈으로 이동
-    function moveToHome(){
-      router.push({
-        name:"Home"
-      })
-    }
-    async function onCreateBoard(){
-      await axios.post('/api/board/create',{
-        title:title.value,
-        content:content.value,
-        writer: writer.value,
-      }).then(()=>{
-        Swal.fire("board 생성!!");
-      })
-    }
+// 필드
+const router = useRouter();
+let title = ref("");
+let content = ref("");
+let writer = ref("");
+// 메소드
+// 홈으로 이동
+function moveToHome() {
+  router.push({
+    name: "Home"
+  })
+}
+
+function onCreateBoard() {
+  writer.value = "test5";
+  console.log(content.value);
+  console.log(title.value);
+  console.log(writer.value);
+  axios.post('/api/board/create', {
+    title: title.value,
+    content: content.value,
+    writer: writer.value,
+  }).then(() => {
+    Swal.fire("board 생성!!");
+  })
+
+}
 </script>
 <style scoped>
 .board-create-container {
@@ -84,10 +90,10 @@ import Swal from "sweetalert2";
 }
 
 .board-create-content button {
-  padding:0.5rem 1rem;
+  padding: 0.5rem 1rem;
   color: white;
   border-radius: 0.5rem;
-  margin:0.5rem;
+  margin: 0.5rem;
 }
 
 .board-create-container input, textarea {
@@ -96,7 +102,7 @@ import Swal from "sweetalert2";
   border-radius: 1.5rem;
   padding-left: 1.5rem;
   margin-top: 1.5rem;
-  color:black;
+  color: black;
 }
 
 .board-create-container textarea {
