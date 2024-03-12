@@ -7,7 +7,9 @@
       </div>
 
       <div>
-        <div></div>
+        <div>
+          <BoardList/>
+        </div>
       </div>
       <div>
 
@@ -17,8 +19,10 @@
 </template>
 <script>
 import {useRouter} from "vue-router";
+import BoardList from "@/components/BoardList.vue";
 
 export default {
+  components: {BoardList},
   setup() {
     const router = useRouter();
     const moveToCreate = () => {
