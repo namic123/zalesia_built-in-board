@@ -15,6 +15,18 @@
         <div class="board-create-content">
           <textarea placeholder="내용을 입력해주세요." v-model="content"/>
         </div>
+        <div class="board-create-file">
+          <span>{{ displayFileName }}</span>
+          <button type="button" @click="triggerFileInput">파일 업로드</button>
+          <input
+              type="file"
+              ref="fileInput"
+              @change="setUploadFiles"
+              accept="image/*"
+              multiple
+              style="display: none;"
+          />
+        </div>
         <div class="board-create-content justify-end">
           <button type="button" class="bg-blue-600" @click="onCreateBoard">저장</button>
           <button type="button" class="bg-red-600" @click="moveToHome">취소</button>
@@ -34,6 +46,11 @@ const router = useRouter();
 let title = ref("");
 let content = ref("");
 let writer = ref("");
+const fileInput = ref(null);
+const files = ref([]);
+const displayFileName = ref('선택된 파일 없음');
+
+
 // 메소드
 // 홈으로 이동
 function moveToHome() {
@@ -42,15 +59,29 @@ function moveToHome() {
   })
 }
 
+// 파일 커스터마이징을 위해 input file trigger
+function triggerFileInput() {
+  fileInput.value.click();
+}
+
+// 멀티 파일을
+function setUploadFiles(event) {
+  files.value = event.target.files;
+  displayFileName.value = Array.from(files.value)
+      .map(file => file.name)
+      .join(', ');
+  if(displayFileName.value.length > 50){
+    displayFileName.value = displayFileName.value.slice(0,50) + "....";
+  }
+}
+
 function onCreateBoard() {
   writer.value = "test5";
-  console.log(content.value);
-  console.log(title.value);
-  console.log(writer.value);
-  axios.post('/api/board/create', {
+  axios.postForm('/api/board/create', {
     title: title.value,
     content: content.value,
     writer: writer.value,
+    uploadFiles: files.value,
   }).then(() => {
     Swal.fire("board 생성!!");
   })
@@ -74,20 +105,36 @@ function onCreateBoard() {
   width: 100%;
 }
 
-.board-create-form {
+.board-create-form,
+.board-create-content,
+.board-create-file {
+  width: 100%;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 100%;
 }
 
-.board-create-content {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.board-create-file {
+  width: 50%;
+  flex-direction: column;
 }
+
+.board-create-file button{
+  padding: 0.3rem;
+  border: 1px solid white;
+  border-radius: 0.6rem;
+  color: white;
+}
+
+.board-create-file span{
+  padding: 0.5rem;
+  font-size: 0.8rem;
+  color: #c7c7c7;
+}
+.board-create-form {
+  flex-direction: column;
+}
+
 
 .board-create-content button {
   padding: 0.5rem 1rem;
