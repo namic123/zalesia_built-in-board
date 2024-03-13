@@ -1,9 +1,9 @@
 <template>
   <div class="board-container home-container pt-10">
     <section>
-      <div class="home-header-section">
-        <button class="mt-5" @click="moveToCreate">Add new board</button>
-        <button class="mt-5" @click="moveToLogin">Login</button>
+      <div class="home-header-section mb-3">
+        <button class="mt-5" @click="moveToCreate">글 작성</button>
+        <button class="mt-5" @click="moveToLogin">로그인</button>
       </div>
 
       <div>
@@ -64,9 +64,10 @@ section {
 }
 
 section button {
-  background-color: white;
-  color: black;
-  padding: 0.8rem;
-  border-radius: 0.5rem;
+  background-color: var(--main-color);
+  color: white;
+  font-weight: bold;
+  padding: 0.5rem;
+  border-radius: 0.9rem;
 }
 </style>

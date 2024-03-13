@@ -1,31 +1,57 @@
-body{
-    background-color: #1e293b;
+@import url('https://fonts.googleapis.com/css2?family=Rubik+Doodle+Shadow&display=swap');
+
+:root {
+    /*--bg-color:#1f242d;*/
+    --bg-color:  #1f242d;
+    --second-bg-color: #323946;
+    --text-color: #dcdcdc;
+    --main-color: #9753ff;
+    --main-gradient: linear-gradient(109.6deg, rgb(218, 185, 252) 11.2%, rgb(125, 89, 252) 91.1%);
+    --second-gradient: radial-gradient(circle at 10% 20%, rgb(222, 168, 248) 0%, rgb(168, 222, 248) 21.8%, rgb(189, 250, 205) 35.6%, rgb(243, 250, 189) 52.9%, rgb(250, 227, 189) 66.8%, rgb(248, 172, 172) 90%, rgb(254, 211, 252) 99.7%);
 }
 
-.container{
-    width:100%;
-    color:white;
-    border:1px solid red;
-    margin:0 auto;
+body {
+    background: var(--bg-color);
 }
-.default-style-container{
-    width:100%;
+
+
+.container {
+    width: 100%;
+    color: white;
+    margin: 0 auto;
+}
+
+.default-style-container {
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
 
 }
-.navigator{
-    display:flex;
-    width:100%;
-    padding:1rem 2rem;
-}
-.navigator h1{
-    font-size: 2rem;
-    font-weight: bold;
-    color: white;
+
+.navigator {
+    display: flex;
+    width: 100%;
+    padding: 1rem 2rem;
 }
 
+.logo {
+    font-size: 3rem;
+    font-weight: 700;
+    cursor: default;
+    font-family: "Rubik Doodle Shadow", system-ui;
+    background-image: var(--main-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+/* html custom */
+textarea{
+    background: transparent;
+    color:white;
+    border:1px solid white;
+}
 /* 에러 스타일 */
 .errors {
     font-size: 0.7rem;
@@ -37,4 +63,34 @@ body{
     font-size: 0.7rem;
     font-weight: bold;
     color: #029a02;
+}
+
+/* custom scrollbar*/
+
+body {
+    --sb-track-color: #323946;
+    --sb-thumb-color: #ffffff;
+    --sb-size: 11px;
+}
+
+body::-webkit-scrollbar, textarea::-webkit-scrollbar{
+    width: var(--sb-size)
+}
+
+body::-webkit-scrollbar-track, textarea::-webkit-scrollbar{
+    background: var(--sb-track-color);
+    border-radius: 5px;
+}
+
+body::-webkit-scrollbar-thumb, textarea::-webkit-scrollbar {
+    background: var(--sb-thumb-color);
+    border-radius: 5px;
+
+}
+
+@supports not selector(::-webkit-scrollbar) {
+    body, textarea {
+        scrollbar-color: var(--sb-thumb-color)
+        var(--sb-track-color);
+    }
 }

@@ -8,7 +8,7 @@
           <input type="password" placeholder="비밀번호를 입력해주세요">
         </div>
         <div>
-          <button type="submit" class="bg-blue-600 text-white">로그인</button>
+          <button type="submit" >로그인</button>
         </div>
       </form>
     </div>
@@ -51,6 +51,10 @@ button {
   padding: 0rem 0.5rem;
   font-weight: bold;
   color: white;
+}
+
+.member-login-form button{
+  background: var(--main-color);
 }
 
 .member-login-container {

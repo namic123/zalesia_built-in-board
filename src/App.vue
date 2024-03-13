@@ -2,7 +2,7 @@
   <div class="container h-screen w-screen">
     <nav class="navigator" >
       <router-link to="/">
-      <h1 class="text-white">
+      <h1 class="logo">
         Zalesia
       </h1>
       </router-link>

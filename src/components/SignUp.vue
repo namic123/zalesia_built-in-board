@@ -433,7 +433,7 @@ function createMemberAccount() {
 <style scoped>
 /* 컨테이너 */
 .member-signup-container {
-  height: 100vh;
+  height: 100%;
   position: fixed;
   z-index: 100;
   background: rgba(0, 0, 0, 0.6);
@@ -444,8 +444,8 @@ function createMemberAccount() {
 .member-signup-form {
   padding: 3rem 3rem;
   text-align: center;
-  background-color: #ffffff;
-  color: black;
+  background-color: var(--second-bg-color);
+  color: white;
   border-radius: 1rem;
 }
 
@@ -477,19 +477,20 @@ function createMemberAccount() {
 
 .member-signup-form input {
   text-align: center;
-  border: 1px solid #d5d5d5;
+  border: 1px solid white;
+  background: transparent;
 }
 
 
 .member-signup-form button {
   margin-top: 0.3rem;
-  background-color: #0888ff;
+  background-color: var(--main-color);
   color: white;
 }
 
 /* 폼 속성 커스텀 */
 button:disabled {
-  background-color: #76b9fa;
+  background-color: #bea6f6;
 }
 
 .member-signup-form input::placeholder {
