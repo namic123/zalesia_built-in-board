@@ -13,7 +13,6 @@ onMounted(() => {
   axios.get(`/api/board/id/${id}`)
       .then(response => {
         Object.assign(boardInfo, response.data);
-        console.log(boardInfo)
       })
       .catch(error => {
         Swal.fire({
@@ -22,7 +21,7 @@ onMounted(() => {
           text: error.response.data.message || error.message,
         });
         router.push({
-          name:"PageHome",
+          name: "PageHome",
         })
       })
 })
@@ -30,13 +29,20 @@ onMounted(() => {
 </script>
 
 <template>
-  <div v-if="boardInfo">
-    {{boardInfo.content}}
+  <div class="default-style-container">
+    <div v-if="boardInfo">
+      <div class="board-title">
+
+      </div>
+      <div class="board-content">
+
+      </div>
+    </div>
   </div>
 </template>
 
 <style scoped>
-  div{
-    color: white;
-  }
+div {
+  color: white;
+}
 </style>

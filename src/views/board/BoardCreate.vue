@@ -29,8 +29,8 @@
           />
         </div>
         <div class="board-create-content justify-end">
-          <button type="button" class="bg-blue-600" @click="onCreateBoard">저장</button>
-          <button type="button" class="bg-red-600" @click="moveToHome">취소</button>
+          <button type="button"  @click="onCreateBoard">저장</button>
+          <button type="button" @click="moveToHome">취소</button>
         </div>
       </form>
     </section>
@@ -141,23 +141,24 @@ function onCreateBoard() {
 .board-create-content button {
   padding: 0.5rem 1rem;
   color: white;
+  background-color:var(--main-color) ;
   border-radius: 0.5rem;
   margin: 0.5rem;
 }
-
+.board-create-content button:nth-child(2){
+  background-color: tomato;
+}
 .board-create-container input, textarea {
   width: 50%;
   height: 2.2rem;
   border-radius: 1.5rem;
   padding: 0rem 1.5rem;
   margin-top: 1.5rem;
-  color: black;
 }
 
 .board-create-container textarea {
   padding-top: 1rem;
   height: 20rem;
-  color: white;
 }
 
 .board-create-container label {

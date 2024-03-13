@@ -477,8 +477,6 @@ function createMemberAccount() {
 
 .member-signup-form input {
   text-align: center;
-  border: 1px solid white;
-  background: transparent;
 }
 
 
