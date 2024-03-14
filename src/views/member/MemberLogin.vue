@@ -1,14 +1,14 @@
 <template>
   <div class="default-style-container member-login-container">
     <div class="member-login-form">
-      <h1>Zalesia</h1>
-      <form @submit.prevent="">
+      <h1 class="logo">Zalesia</h1>
+      <form >
         <div>
-          <input type="text" placeholder="아이디를 입력해주세요.">
-          <input type="password" placeholder="비밀번호를 입력해주세요">
+          <input type="text" placeholder="아이디를 입력해주세요." v-model="memberId">
+          <input type="password" placeholder="비밀번호를 입력해주세요" v-model="password">
         </div>
         <div>
-          <button type="submit" >로그인</button>
+          <button type="button" @click="handleLogin">로그인</button>
         </div>
       </form>
     </div>
@@ -22,27 +22,38 @@
     </Transition>
   </div>
 </template>
-<script>
+<script setup>
 import MemberSignUp from "@/components/SignUp.vue";
 import {ref} from "vue";
+import axios from "axios";
 
-export default {
-  components: {MemberSignUp},
-  setup() {
+/* 로그인 관련 상태*/
+const memberId = ref("");
+const password = ref("");
 
-    const signupModal = ref(false);
-
-    function signupModalHandler() {
-      signupModal.value = !signupModal.value;
-    }
-
-    return {
-
-      signupModal,
-      signupModalHandler,
-    }
-  }
+/* 모달 */
+const signupModal = ref(false);
+function signupModalHandler() {
+  signupModal.value = !signupModal.value;
 }
+
+function handleLogin(){
+  const params = new URLSearchParams();
+  params.append('username', 'namic123');
+  params.append('password', '123123qwe!');
+
+  // 토큰 생성과 안정성 멱등성의 이유로 POST 요청을 사용
+  axios.post('/api/member/login', params, {
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    }
+  }).then(()=>{
+    console.log("로그인 성공");
+  }).catch(()=>{
+    console.log("로그인 실패")
+  })
+}
+
 </script>
 
 <style scoped>
@@ -53,7 +64,7 @@ button {
   color: white;
 }
 
-.member-login-form button{
+.member-login-form button {
   background: var(--main-color);
 }
 
@@ -75,7 +86,7 @@ button {
 }
 
 .member-login-form h1 {
-  color: white;
+  background-image: var(--second-gradient);
   font-weight: bold;
   font-size: 2rem;
 }
@@ -103,11 +114,12 @@ button {
 }
 
 .modal-enter-active,
-.modal-leave-active{
+.modal-leave-active {
   transition: opacity 0.3s ease;
 }
+
 .modal-enter-from,
-.modal-leave-to{
+.modal-leave-to {
   opacity: 0;
 }
 </style>
