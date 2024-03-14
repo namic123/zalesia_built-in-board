@@ -7,7 +7,7 @@
         <!-- 이름 -->
         <div>
           <label>이름</label>
-          <input type="text" placeholder="이름 입력" v-model="name" @input="updateName($event)">
+          <input type="text" placeholder="이름 입력" v-model="name" @input="updateName($event)" maxlength=20>
         </div>
         <!-- 닉네임 -->
         <div>
@@ -17,6 +17,7 @@
               placeholder="별명 입력(2글자 이상)"
               v-model="nickname"
               @input="updateNickname($event)"
+              maxlength=20
           >
           <div v-if="isValidateNicknameSuccess" class="success">사용 가능한 별명입니다</div>
           <div v-if="isValidateNickname" class="errors">{{ nicknameErrorMessage }}</div>
@@ -34,7 +35,7 @@
         <!-- 이메일 -->
         <div>
           <label>이메일</label>
-          <input type="email" placeholder="이메일 입력" v-model="email">
+          <input type="email" placeholder="이메일 입력" v-model="email" maxlength=20>
           <div v-if="isValidateEmailSuccess" class="success">사용 가능한 이메일입니다</div>
           <div v-if="isValidateEmail" class="errors">{{ emailErrorMessage }}</div>
           <button
@@ -50,7 +51,7 @@
         <!-- 아이디 -->
         <div>
           <label>아이디</label>
-          <input type="text" placeholder="아이디 입력" v-model="memberId" @input="updateMemberId($event)">
+          <input type="text" placeholder="아이디 입력" v-model="memberId" @input="updateMemberId($event)" maxlength=20>
           <div v-if="isValidateMemberIdSuccess" class="success">사용 가능한 아이디입니다.</div>
           <div v-if="isValidateMemberId" class="errors">{{ memberIdErrorMessage }}</div>
           <button
@@ -63,8 +64,8 @@
         <!-- 비밀번호 -->
         <div>
           <label>비밀번호</label>
-          <input type="password" placeholder="비밀번호 입력" v-model="password" @input="updatePassword($event)">
-          <input type="password" placeholder="비밀번호 재확인" v-model="passwordCheck" @input="updatePasswordCheck($event)">
+          <input type="password" placeholder="비밀번호 입력" v-model="password" @input="updatePassword($event)" maxlength=20>
+          <input type="password" placeholder="비밀번호 재확인" v-model="passwordCheck" @input="updatePasswordCheck($event)" maxlength=20>
           <div v-if="comparePasswords" class="errors">비밀번호가 일치하지 않습니다</div>
           <div v-if="checkPasswordLength" class="errors">{{ password.length === 0 ? "" : "8자 이상 입력이 필요합니다" }}</div>
           <div v-if="isValidatePassword" class="errors">8자 이상, 영문자, 숫자, 특수문자를</div>
