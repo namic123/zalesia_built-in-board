@@ -40,7 +40,7 @@ function moveToBoard(boardId){
         <tr class="table-body-tr" v-for="board in boardList" :key="board.id"
             @click="moveToBoard(board.id)">
           <td>{{board.id}}</td>
-          <td>{{board.title}}</td>
+          <td>{{board.title.length > 30 ? board.title.slice(0,30) + "....": board.title}}</td>
           <td>{{board.writer}}</td>
           <td>{{board.inserted}}</td>
         </tr>
