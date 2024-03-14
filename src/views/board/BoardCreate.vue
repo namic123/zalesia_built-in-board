@@ -8,13 +8,13 @@
         <div class="board-create-content">
           <input
               type="text"
-              placeholder="제목을 입력해주세요.(최대 100자)"
+              placeholder="제목을 입력해주세요.(최대 70자)"
               v-model="title"
-              maxlength=100
+              maxlength=70
           >
         </div>
         <div class="board-create-content">
-          <textarea class="custom-scroll-bar" placeholder="내용을 입력해주세요." v-model="content"/>
+          <textarea class="custom-scroll-bar" placeholder="내용을 입력해주세요(700자 이내)" maxlength=700 v-model="content"/>
         </div>
         <div class="board-create-file">
           <span>{{ displayFileName }}</span>
@@ -150,12 +150,12 @@ function onCreateBoard() {
 }
 .board-create-container input, textarea {
   width: 50%;
-  height: 2.2rem;
+  height: 2.3em;
   border-radius: 1.5rem;
   padding: 0rem 1.5rem;
   margin-top: 1.5rem;
+  font-size: 1.2rem;
 }
-
 .board-create-container textarea {
   padding-top: 1rem;
   height: 20rem;

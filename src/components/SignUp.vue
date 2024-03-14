@@ -482,13 +482,13 @@ function createMemberAccount() {
 
 .member-signup-form button {
   margin-top: 0.3rem;
-  background-color: var(--main-color);
+  background-color: #385ffc;
   color: white;
 }
 
 /* 폼 속성 커스텀 */
 button:disabled {
-  background-color: #bea6f6;
+  background-color: #8594fc;
 }
 
 .member-signup-form input::placeholder {

@@ -1,6 +1,6 @@
 <template>
   <div class="container h-screen w-screen">
-    <nav class="navigator" >
+    <nav class="navigator mb-8">
       <router-link to="/">
       <h1 class="logo">
         Zalesia

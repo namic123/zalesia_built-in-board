@@ -5,7 +5,7 @@
     --bg-color:  #1f242d;
     --second-bg-color: #323946;
     --text-color: #dcdcdc;
-    --main-color: #9753ff;
+    --main-color: #b78bff;
     --main-gradient: linear-gradient(109.6deg, rgb(218, 185, 252) 11.2%, rgb(125, 89, 252) 91.1%);
     --second-gradient: radial-gradient(circle at 10% 20%, rgb(222, 168, 248) 0%, rgb(168, 222, 248) 21.8%, rgb(189, 250, 205) 35.6%, rgb(243, 250, 189) 52.9%, rgb(250, 227, 189) 66.8%, rgb(248, 172, 172) 90%, rgb(254, 211, 252) 99.7%);
 }
@@ -40,7 +40,7 @@ body {
     font-weight: 700;
     cursor: default;
     font-family: "Rubik Doodle Shadow", system-ui;
-    background-image: var(--main-gradient);
+    background-image: var(--second-gradient);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -90,7 +90,7 @@ body::-webkit-scrollbar-thumb, textarea::-webkit-scrollbar {
 
 @supports not selector(::-webkit-scrollbar) {
     body, textarea {
-        scrollbar-color: var(--sb-thumb-color)
+        scrollbar-color: var(--sb-thumb-color),
         var(--sb-track-color);
     }
 }
