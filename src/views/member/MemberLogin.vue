@@ -38,19 +38,19 @@ function signupModalHandler() {
 }
 
 function handleLogin(){
-  const params = new URLSearchParams();
-  params.append('username', 'namic123');
-  params.append('password', '123123qwe!');
+  const data = new URLSearchParams();
+  data.append('username', memberId.value);
+  data.append('password', password.value);
 
   // 토큰 생성과 안정성 멱등성의 이유로 POST 요청을 사용
-  axios.post('/api/member/login', params, {
+  axios.post('/api/member/login', data, {
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
     }
-  }).then(()=>{
-    console.log("로그인 성공");
-  }).catch(()=>{
-    console.log("로그인 실패")
+  }).then((response)=>{
+    console.log(response);
+  }).catch((error)=>{
+    console.log(error);
   })
 }
 
