@@ -141,7 +141,7 @@ function onCreateBoard() {
 .board-create-content button {
   padding: 0.5rem 1rem;
   color: white;
-  background-color:var(--main-color) ;
+  background-color: #1968fd;
   border-radius: 0.5rem;
   margin: 0.5rem;
 }

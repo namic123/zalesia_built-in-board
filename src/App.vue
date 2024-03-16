@@ -11,17 +11,16 @@
   </div>
 </template>
 
-<script>
-  export default {
-    setup(){
+<script setup>
 
-      return{
-
-      }
-    }
-  }
 </script>
 
 <style>
 @import "assets/styles/default.css";
+.navigator{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 </style>

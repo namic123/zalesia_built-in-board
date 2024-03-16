@@ -2,7 +2,7 @@
   <div class="default-style-container member-login-container">
     <div class="member-login-form">
       <h1 class="logo">Zalesia</h1>
-      <form >
+      <form>
         <div>
           <input type="text" placeholder="아이디를 입력해주세요." v-model="memberId">
           <input type="password" placeholder="비밀번호를 입력해주세요" v-model="password">
@@ -26,18 +26,25 @@
 import MemberSignUp from "@/components/SignUp.vue";
 import {ref} from "vue";
 import axios from "axios";
+import Swal from "sweetalert2";
+import {useRouter} from "vue-router";
+import {useMemberStore} from "@/store";
 
+
+const router = useRouter();
+const memberStore = useMemberStore();
 /* 로그인 관련 상태*/
 const memberId = ref("");
 const password = ref("");
 
 /* 모달 */
 const signupModal = ref(false);
+
 function signupModalHandler() {
   signupModal.value = !signupModal.value;
 }
 
-function handleLogin(){
+function handleLogin() {
   const data = new URLSearchParams();
   data.append('username', memberId.value);
   data.append('password', password.value);
@@ -47,10 +54,27 @@ function handleLogin(){
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
     }
-  }).then((response)=>{
-    console.log(response);
-  }).catch((error)=>{
+  }).then((response) => {
+    memberStore.setLogin(response.data);
+    Swal.fire({
+      title: "로그인 성공!",
+      text: "게시글 목록으로 이동합니다.",
+      icon: "success"
+    });
+    router.push({
+      name: "Home",
+    });
+  }).catch((error) => {
     console.log(error);
+      Swal.fire({
+        icon: "error",
+        title: "이런...",
+        text: "로그인이 실패했습니다. 아이디와 비밀번호를 다시 확인해주세요.",
+        footer: '<a href="#">계정 정보를 잊으셨나요?</a>'
+      });
+  }).finally(() => {
+    memberId.value = "";
+    password.value = "";
   })
 }
 

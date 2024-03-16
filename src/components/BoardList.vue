@@ -53,7 +53,6 @@ function moveToBoard(boardId){
 <style scoped>
   .board-list{
     width: 100%;
-    border: 1px solid green;
   }
   table{
     width: 100%;
