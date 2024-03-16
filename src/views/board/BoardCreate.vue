@@ -78,7 +78,7 @@ function setUploadFiles(event) {
 
 function onCreateBoard() {
   writer.value = "test5";
-  axios.postForm('/api/board/create', {
+  axios.postForm('/api/boards', {
     title: title.value,
     content: content.value,
     writer: writer.value,

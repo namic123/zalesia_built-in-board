@@ -242,7 +242,7 @@ function onCloseModal() {
 // 닉네임 중복 체크
 function checkNicknameDuplicates() {
   console.log(nickname.value);
-  axios.get('/api/member/check', {
+  axios.get('/api/members/check/nickname', {
     params: {
       nickname: nickname.value,
     }
@@ -264,7 +264,7 @@ function checkNicknameDuplicates() {
 
 // 닉네임 중복 체크
 function checkMemberIdDuplicates() {
-  axios.get('/api/member/check', {
+  axios.get('/api/members/check/memberId', {
     params: {
       memberId: memberId.value,
     }
@@ -287,7 +287,7 @@ function checkMemberIdDuplicates() {
 
 // 닉네임 중복 체크
 function checkEmailDuplicates() {
-  axios.get('/api/member/check', {
+  axios.get('/api/members/check/email', {
     params: {
       email: email.value,
     }
@@ -349,7 +349,7 @@ watch(memberId, () => {
 /* --------------------------- 계정 생성 ----------------------------------*/
 function createMemberAccount() {
   isValidateAllFormSuccess.value = false;
-  axios.post('/api/member/create', {
+  axios.post('/api/members/create', {
     name: name.value,
     nickname: nickname.value,
     email: email.value,

@@ -6,7 +6,7 @@ import {useRouter} from "vue-router";
 let boardList = ref(null);
 const router = useRouter();
 onMounted(()=> {
-  axios.get('/api/board/list')
+  axios.get('/api/boards')
       .then((res)=>{
         boardList.value = res.data.boardList;
       })

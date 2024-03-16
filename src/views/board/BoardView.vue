@@ -10,7 +10,7 @@ const id = route.params.id;
 const boardInfo = reactive({});
 
 onMounted(() => {
-  axios.get(`/api/board/id/${id}`)
+  axios.get(`/api/boards/${id}`)
       .then(response => {
         Object.assign(boardInfo, response.data);
       })

@@ -2,8 +2,8 @@
   <div class="board-container home-container pt-10">
     <section>
       <div class="home-header-section mb-3">
-        <button class="mt-5" @click="moveToCreate">글 작성</button>
-        <button class="mt-5" @click="moveToLogin">로그인</button>
+        <button  class="mt-5" @click="moveToCreate">글 작성</button>
+        <button  class="mt-5" @click="moveToLogin">로그인</button>
       </div>
 
       <div>
@@ -17,14 +17,16 @@
     </section>
   </div>
 </template>
-<script>
+<script setup>
+import {onMounted} from "vue";
+
+onMounted(()=>{
+})
+
 import {useRouter} from "vue-router";
 import BoardList from "@/components/BoardList.vue";
-
-export default {
-  components: {BoardList},
-  setup() {
     const router = useRouter();
+
     const moveToCreate = () => {
       router.push({
         name: 'BoardCreate',
@@ -34,12 +36,6 @@ export default {
       router.push({
         name: 'MemberLogin',
       });
-    }
-    return {
-      moveToCreate,
-      moveToLogin,
-    }
-  }
 }
 </script>
 <style scoped>

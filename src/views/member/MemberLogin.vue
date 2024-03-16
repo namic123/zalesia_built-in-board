@@ -28,11 +28,9 @@ import {ref} from "vue";
 import axios from "axios";
 import Swal from "sweetalert2";
 import {useRouter} from "vue-router";
-import {useMemberStore} from "@/store";
 
 
 const router = useRouter();
-const memberStore = useMemberStore();
 /* 로그인 관련 상태*/
 const memberId = ref("");
 const password = ref("");
@@ -50,12 +48,12 @@ function handleLogin() {
   data.append('password', password.value);
 
   // 토큰 생성과 안정성 멱등성의 이유로 POST 요청을 사용
-  axios.post('/api/member/login', data, {
+  axios.post('/api/members/login', data, {
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
     }
-  }).then((response) => {
-    memberStore.setLogin(response.data);
+  }).then(() => {
+
     Swal.fire({
       title: "로그인 성공!",
       text: "게시글 목록으로 이동합니다.",
