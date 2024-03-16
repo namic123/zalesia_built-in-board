@@ -1,18 +1,15 @@
 import {defineStore} from "pinia";
 
-export const useMemberStore = defineStore('memberStore',{
-    state: () => ({
+export const useMemberStore = defineStore('member', {
+    state: ()=> ({
         member: null,
-        isLoggedIn: false,
+        accessToken:null,
     }),
-    actions:{
-        setLogin(memberData){
-            this.member = memberData;
-            this.isLoggedIn = true;
+    getters:{
+        isLoggedIn: (state) => {
+            return state.accessToken != null
         },
-        logout(){
-            this.member = null;
-            this.isLoggedIn = false;
-        }
-    }
-})
+    },
+    actions: {},
+}
+)

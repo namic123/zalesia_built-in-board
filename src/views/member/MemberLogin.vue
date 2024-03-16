@@ -28,6 +28,7 @@ import {ref} from "vue";
 import axios from "axios";
 import Swal from "sweetalert2";
 import {useRouter} from "vue-router";
+import {useMemberStore} from "@/store";
 
 
 const router = useRouter();
@@ -35,6 +36,7 @@ const router = useRouter();
 const memberId = ref("");
 const password = ref("");
 
+const memberStore = useMemberStore();
 /* 모달 */
 const signupModal = ref(false);
 
@@ -52,8 +54,10 @@ function handleLogin() {
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
     }
-  }).then(() => {
-
+  }).then((response) => {
+    console.log(response.headers.getAuthorization());
+    memberStore.member = response.data;
+    console.log(memberStore.member)
     Swal.fire({
       title: "로그인 성공!",
       text: "게시글 목록으로 이동합니다.",
