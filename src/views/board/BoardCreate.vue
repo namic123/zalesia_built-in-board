@@ -41,6 +41,7 @@ import {useRouter} from "vue-router";
 import {ref} from "vue";
 import axios from "axios";
 import Swal from "sweetalert2";
+import {useMemberStore} from "@/store";
 
 // 필드
 const router = useRouter();
@@ -50,7 +51,7 @@ let writer = ref("");
 const fileInput = ref(null);
 const files = ref([]);
 const displayFileName = ref('선택된 파일 없음');
-
+const memberStore = useMemberStore();
 
 // 메소드
 // 홈으로 이동
@@ -77,7 +78,7 @@ function setUploadFiles(event) {
 }
 
 function onCreateBoard() {
-  writer.value = "test5";
+  writer.value = memberStore.member.memberId;
   axios.postForm('/api/boards', {
     title: title.value,
     content: content.value,

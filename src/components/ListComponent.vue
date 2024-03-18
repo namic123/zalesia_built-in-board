@@ -3,7 +3,7 @@ import axios from "axios";
 import {onMounted, ref} from "vue";
 import {useRouter} from "vue-router";
 
-let boardList = ref(null);
+let boardList = ref([]);
 const router = useRouter();
 onMounted(()=> {
   axios.get('/api/boards')
@@ -36,11 +36,11 @@ function moveToBoard(boardId){
           <th>등록일시</th>
         </tr>
         </thead>
-        <tbody>
+        <tbody v-if="boardList">
         <tr class="table-body-tr" v-for="board in boardList" :key="board.id"
             @click="moveToBoard(board.id)">
           <td>{{board.id}}</td>
-          <td>{{board.title.length > 30 ? board.title.slice(0,30) + "....": board.title}}</td>
+          <td>{{board.title?.length > 30 ? board.title.slice(0,30) + "....": board.title}}</td>
           <td>{{board.writer}}</td>
           <td>{{board.inserted}}</td>
         </tr>
