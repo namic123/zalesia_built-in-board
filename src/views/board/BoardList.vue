@@ -8,7 +8,7 @@
 
       <div>
         <div>
-          <BoardList/>
+          <ListComponent/>
         </div>
       </div>
       <div>
@@ -24,8 +24,8 @@ onMounted(()=>{
 })
 
 import {useRouter} from "vue-router";
-import BoardList from "@/components/List.vue";
 import {useMemberStore} from "@/store";
+import ListComponent from "@/components/ListComponent.vue";
     const router = useRouter();
 
     const memberStore = useMemberStore();

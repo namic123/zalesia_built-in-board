@@ -3,15 +3,15 @@ import BoardCreate from '@/views/board/BoardCreate.vue'
 import MemberLogin from "@/views/member/MemberLogin.vue";
 import BoardView from "@/views/board/BoardView.vue";
 import BoardList from "@/views/board/BoardList.vue";
-import Home from "@/views/Home.vue";
+import HomeView from "@/views/HomeView.vue";
 
 const router = createRouter({
     history:createWebHistory(),
     routes:[
         {
             path:'/',
-            name:'Home',
-            component:Home
+            name:'HomeView',
+            component:HomeView
         },
         {
             path:'/board',

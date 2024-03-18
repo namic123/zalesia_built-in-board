@@ -63,16 +63,16 @@ function handleLogin() {
       icon: "success"
     });
     router.push({
-      name: "Home",
+      name: "BoardList",
     });
   }).catch((error) => {
     console.log(error);
-      Swal.fire({
-        icon: "error",
-        title: "이런...",
-        text: "로그인이 실패했습니다. 아이디와 비밀번호를 다시 확인해주세요.",
-        footer: '<a href="#">계정 정보를 잊으셨나요?</a>'
-      });
+    Swal.fire({
+      icon: "error",
+      title: "이런...",
+      text: "로그인이 실패했습니다. 아이디와 비밀번호를 다시 확인해주세요.",
+      footer: '<a href="#">계정 정보를 잊으셨나요?</a>'
+    });
   }).finally(() => {
     memberId.value = "";
     password.value = "";
