@@ -1,9 +1,9 @@
 <template>
-  <div class="board-container home-container pt-10">
+  <div class="board-container board-list-container pt-10">
     <section>
-      <div class="home-header-section mb-3">
-        <button  class="mt-5" @click="moveToCreate">글 작성</button>
-        <button  class="mt-5" @click="moveToLogin">로그인</button>
+      <div class="board-list-header-section mb-3">
+        <button v-if="memberStore.isLoggedIn" class="mt-5" @click="moveToCreate">글 작성</button>
+        <button v-if="!memberStore.isLoggedIn" class="mt-5" @click="moveToLogin">로그인</button>
       </div>
 
       <div>
@@ -24,9 +24,11 @@ onMounted(()=>{
 })
 
 import {useRouter} from "vue-router";
-import BoardList from "@/components/BoardList.vue";
+import BoardList from "@/components/List.vue";
+import {useMemberStore} from "@/store";
     const router = useRouter();
 
+    const memberStore = useMemberStore();
     const moveToCreate = () => {
       router.push({
         name: 'BoardCreate',
@@ -39,7 +41,7 @@ import BoardList from "@/components/BoardList.vue";
 }
 </script>
 <style scoped>
-.home-container {
+.board-list-container {
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -52,7 +54,7 @@ section {
   flex-direction: column;
 }
 
-.home-header-section {
+.board-list-header-section {
   width: 100%;
   display: flex;
   justify-content: flex-end;
@@ -60,7 +62,7 @@ section {
 }
 
 section button {
-  background-color: var(--main-color);
+  background-image: var(--main-gradient);
   color: white;
   font-weight: bold;
   padding: 0.5rem;

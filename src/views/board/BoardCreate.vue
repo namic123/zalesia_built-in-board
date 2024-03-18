@@ -30,7 +30,7 @@
         </div>
         <div class="board-create-content justify-end">
           <button type="button"  @click="onCreateBoard">저장</button>
-          <button type="button" @click="moveToHome">취소</button>
+          <button type="button" @click="moveToList">취소</button>
         </div>
       </form>
     </section>
@@ -54,9 +54,9 @@ const displayFileName = ref('선택된 파일 없음');
 
 // 메소드
 // 홈으로 이동
-function moveToHome() {
+function moveToList() {
   router.push({
-    name: "Home"
+    name: "BoardList"
   })
 }
 
@@ -85,7 +85,7 @@ function onCreateBoard() {
     uploadFiles: files.value,
   }).then(() => {
     Swal.fire("게시글이 생성되었습니다!");
-    moveToHome();
+    moveToList();
   })
 
 }

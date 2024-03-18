@@ -55,9 +55,8 @@ function handleLogin() {
       'Content-Type': 'application/x-www-form-urlencoded'
     }
   }).then((response) => {
-    console.log(response.headers.getAuthorization());
     memberStore.member = response.data;
-    console.log(memberStore.member)
+    memberStore.accessToken = response.headers.getAuthorization();
     Swal.fire({
       title: "로그인 성공!",
       text: "게시글 목록으로 이동합니다.",
@@ -91,7 +90,7 @@ button {
 }
 
 .member-login-form button {
-  background: var(--main-color);
+  background-image: var(--main-gradient);
 }
 
 .member-login-container {

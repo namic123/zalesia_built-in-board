@@ -61,8 +61,8 @@ function moveToBoard(boardId){
     border: 1px solid white;
   }
   .table-body-tr:hover{
-    background-color: var(--main-color);
-    color: white;
+    background-image: var(--main-gradient);
+    color: black;
     cursor: pointer;
   }
 

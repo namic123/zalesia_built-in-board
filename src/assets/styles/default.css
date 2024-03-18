@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Rubik+Doodle+Shadow&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rubik+Doodle+Shadow&family=Zen+Old+Mincho&display=swap');
 
 :root {
     /*--bg-color:#1f242d;*/
@@ -6,7 +6,7 @@
     --second-bg-color: #323946;
     --text-color: #dcdcdc;
     --main-color: #9a6bff;
-    --main-gradient: linear-gradient(109.6deg, rgb(218, 185, 252) 11.2%, rgb(125, 89, 252) 91.1%);
+    --main-gradient: linear-gradient(109.6deg, rgb(210, 161, 252) 11.2%, rgb(125, 89, 252) 91.1%);
     --second-gradient: radial-gradient(circle at 10% 20%, rgb(222, 168, 248) 0%, rgb(168, 222, 248) 21.8%, rgb(189, 250, 205) 35.6%, rgb(243, 250, 189) 52.9%, rgb(250, 227, 189) 66.8%, rgb(248, 172, 172) 90%, rgb(254, 211, 252) 99.7%);
 }
 
@@ -55,6 +55,7 @@ textarea, input{
 button:hover{
     opacity: 0.7;
 }
+
 /* 에러 스타일 */
 .errors {
     font-size: 0.7rem;

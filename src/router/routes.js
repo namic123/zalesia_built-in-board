@@ -1,8 +1,9 @@
 import {createRouter, createWebHistory} from "vue-router";
-import Home from '@/views/PageHome.vue';
 import BoardCreate from '@/views/board/BoardCreate.vue'
 import MemberLogin from "@/views/member/MemberLogin.vue";
 import BoardView from "@/views/board/BoardView.vue";
+import BoardList from "@/views/board/BoardList.vue";
+import Home from "@/views/Home.vue";
 
 const router = createRouter({
     history:createWebHistory(),
@@ -11,6 +12,11 @@ const router = createRouter({
             path:'/',
             name:'Home',
             component:Home
+        },
+        {
+            path:'/board',
+            name:'BoardList',
+            component:BoardList,
         },
         {
             path:'/board/create',
