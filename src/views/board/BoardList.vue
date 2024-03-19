@@ -1,5 +1,5 @@
 <template>
-  <div class="board-container board-list-container pt-10">
+  <div class="board-container board-list-container">
     <section>
       <div class="board-list-header-section mb-3">
         <button v-if="memberStore.isLoggedIn" class="mt-5" @click="moveToCreate">글 작성</button>
