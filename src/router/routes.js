@@ -4,6 +4,7 @@ import MemberLogin from "@/views/member/MemberLogin.vue";
 import BoardView from "@/views/board/BoardView.vue";
 import BoardList from "@/views/board/BoardList.vue";
 import HomeView from "@/views/HomeView.vue";
+import BoardUpdate from "@/views/board/BoardUpdate.vue";
 
 const router = createRouter({
     history:createWebHistory(),
@@ -14,7 +15,7 @@ const router = createRouter({
             component:HomeView
         },
         {
-            path:'/board',
+            path:'/boards',
             name:'BoardList',
             component:BoardList,
         },
@@ -27,6 +28,11 @@ const router = createRouter({
             path:'/board/:id',
             name:'BoardView',
             component:BoardView,
+        },
+        {
+            path:'/board/update/:id',
+            name:'BoardUpdate',
+            component:BoardUpdate,
         },
         {
             path:'/member/login',

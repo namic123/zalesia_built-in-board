@@ -3,16 +3,21 @@ import {useRoute, useRouter} from "vue-router";
 import axios from "axios";
 import {onMounted, reactive} from "vue";
 import Swal from "sweetalert2";
+import {useMemberStore} from "@/store";
 
 const route = useRoute();
 const router = useRouter();
 const id = route.params.id;
 const boardInfo = reactive({});
+const memberStore = useMemberStore();
+const memberId = memberStore.member.memberId;
+
 
 onMounted(() => {
   axios.get(`/api/boards/${id}`)
       .then(response => {
         Object.assign(boardInfo, response.data);
+        console.log(boardInfo);
       })
       .catch(error => {
         Swal.fire({
@@ -21,10 +26,26 @@ onMounted(() => {
           text: error.response.data.message || error.message,
         });
         router.push({
-          name: "PageHome",
+          name: "BoardList",
         })
       })
 })
+
+function onBoardDelete(){
+  axios.delete(`/api/boards/${id}`)
+      .then(()=>{
+
+      }).catch(()=>{
+
+  })
+}
+
+function moveToBoardUpdate(){
+  router.push({
+    name: "BoardUpdate",
+    params:id,
+  })
+}
 
 </script>
 
@@ -42,9 +63,9 @@ onMounted(() => {
         <section class="board-body-content">
           <p>{{ boardInfo.content }}</p>
         </section>
-        <footer class="board-body-footer">
-          <button class="text-blue-300">수정</button>
-          <button class="text-red-400">삭제</button>
+        <footer class="board-body-footer" v-if="memberId === boardInfo.writer">
+          <button class="text-blue-300" @click="moveToBoardUpdate">수정</button>
+          <button class="text-red-400" @click="onBoardDelete">삭제</button>
         </footer>
       </section>
       <footer class="board-footer">

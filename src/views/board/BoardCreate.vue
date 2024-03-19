@@ -91,7 +91,7 @@ function onCreateBoard() {
 
 }
 </script>
-<style scoped>
+<style>
 .board-create-container {
   width: 100%;
   display: flex;
