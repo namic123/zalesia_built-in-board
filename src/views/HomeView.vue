@@ -86,6 +86,7 @@ function moveToList() {
   width: 100%;
   display: flex;
   justify-content: center;
+  margin-top: 10rem;
 }
 
 .home-container > div {
