@@ -100,6 +100,7 @@ function downLoadFile(boardId, fileName){
     url: `/api/boards/download/${boardId}/${fileName}`,
     method:'GET',
     responseType:'blob',  // 응답 데이터 blob처리
+    // Blob: 이진 데이터의 큰 덩어리를 다룰 때 사용되는 데이터 타입
   }).then((response)=>{
     // 다운로드 데이터 URL 객체로 저장
     const url = window.URL.createObjectURL(new Blob([response.data]));
