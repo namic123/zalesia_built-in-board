@@ -38,10 +38,23 @@
 </template>
 <script setup>
 import {useRouter} from "vue-router";
-import {ref} from "vue";
+import {onMounted, ref} from "vue";
 import axios from "axios";
 import Swal from "sweetalert2";
 import {useMemberStore} from "@/store";
+
+onMounted(()=>{
+  if(memberStore.accessToken === null){
+    Swal.fire({
+      icon: "error",
+      title: "잘못된 접근",
+      text: "잘못된 접근입니다. 경로를 다시 확인해주세요.",
+    });
+    router.push({
+      name: "BoardList",
+    })
+  }
+})
 
 // 필드
 const router = useRouter();
@@ -78,16 +91,39 @@ function setUploadFiles(event) {
 }
 
 function onCreateBoard() {
-  writer.value = memberStore.member.memberId;
+  writer.value = memberStore.member?.memberId;
   axios.postForm('/api/boards', {
     title: title.value,
     content: content.value,
     writer: writer.value,
     uploadFiles: files.value,
+  }, {
+    headers:{
+      "Authorization":memberStore.accessToken
+    }
   }).then(() => {
     Swal.fire("게시글이 생성되었습니다!");
     moveToList();
   })
+      .catch((error)=>{
+        if(error.response.status === 401){
+            Swal.fire({
+              icon: "error",
+              title: "로그인 시간 만료",
+              text: "로그인 시간이 만료됐습니다. 로그인 후 이용바랍니다.",
+            });
+            memberStore.logout();
+            router.push({
+              name: "MemberLogin",
+            })
+        }else{
+          Swal.fire({
+            icon: "error",
+            title: "서버 장애",
+            text: "서버에 문제가 발생했습니다. 잠시 후 이용바랍니다.",
+          });
+        }
+      })
 
 }
 </script>

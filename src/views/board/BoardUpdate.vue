@@ -16,16 +16,25 @@ onMounted(() => {
         Object.assign(boardInfo, response.data);
         console.log(boardInfo);
       })
-      .catch(error => {
-        Swal.fire({
-          icon: "error",
-          title: "이런...",
-          text: error.response.data.message || error.message,
-        });
-        router.push({
-          name: "BoardList",
-        })
+      .catch((error)=>{
+    if(error.response.status === 401){
+      Swal.fire({
+        icon: "error",
+        title: "로그인 시간 만료",
+        text: "로그인 시간이 만료됐습니다. 로그인 후 이용바랍니다.",
+      });
+      memberStore.logout();
+      router.push({
+        name: "MemberLogin",
       })
+    }else{
+      Swal.fire({
+        icon: "error",
+        title: "서버 장애",
+        text: "서버에 문제가 발생했습니다. 잠시 후 이용바랍니다.",
+      });
+    }
+  })
 })
 onUpdated(()=>{
   if(memberStore.member.memberId !== boardInfo.writer){
