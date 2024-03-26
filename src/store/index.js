@@ -10,6 +10,12 @@ export const useMemberStore = defineStore('member', {
             return state.accessToken != null
         },
     },
-    actions: {},
+    actions: {
+        logout(){
+            this.member = null;
+            this.accessToken = null;
+            localStorage.clear();
+        }
+    },
 }
 )
