@@ -9,10 +9,20 @@ const props = defineProps({
   boardId: Number
 });
 
-
+let commentList= ref([]);
 const memberStore = useMemberStore();
 const router = useRouter();
 let commentInputValue = ref("");
+
+function fetchCommentList() {
+  axios.get(`/api/comments`)
+      .then((response) => {
+        commentList.value = response.data.content;
+      })
+      .catch((error) => {
+        console.error(error);
+      })
+}
 
 function onCreateComment() {
   console.log(commentInputValue.value);
