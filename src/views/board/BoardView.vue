@@ -4,6 +4,7 @@ import axios from "axios";
 import {onMounted, reactive, ref} from "vue";
 import Swal from "sweetalert2";
 import {useMemberStore} from "@/store";
+import BoardComment from "@/components/BoardComment.vue";
 
 const route = useRoute();
 const router = useRouter();
@@ -156,13 +157,8 @@ function downLoadFile(boardId, fileName) {
         </div>
 
       </section>
-      <footer class="board-footer" v-if="memberStore.member">
-          <textarea placeholder="댓글을 입력해주세요"/>
-          <button class="bg-blue-500">추가</button>
-      </footer>
-      <footer class="board-footer" v-else>
-        <textarea placeholder="로그인 후 이용바랍니다."/>
-        <button class="bg-blue-500">로그인</button>
+      <footer class="board-footer">
+        <BoardComment :boardId="id" />
       </footer>
     </div>
   </div>
@@ -239,17 +235,4 @@ function downLoadFile(boardId, fileName) {
   padding-top: 2rem;
 }
 
-.board-footer textarea {
-  width: 60%;
-  height: 5rem;
-  border-radius: 1rem;
-  padding: 0.6rem;
-  margin-right: 1rem;
-  margin-top: 0rem;
-}
-
-.board-footer > button {
-  border-radius: 1rem;
-  padding: 0.5rem 1rem;
-}
 </style>

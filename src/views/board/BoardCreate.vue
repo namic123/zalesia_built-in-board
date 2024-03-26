@@ -1,41 +1,3 @@
-<template>
-  <div class="board-container board-create-container pt-10">
-    <header>
-      <h1 class="text-white">게시글 쓰기</h1>
-    </header>
-    <section>
-      <form class="board-create-form">
-        <div class="board-create-content">
-          <input
-              type="text"
-              placeholder="제목을 입력해주세요.(최대 70자)"
-              v-model="title"
-              maxlength=70
-          >
-        </div>
-        <div class="board-create-content">
-          <textarea class="custom-scroll-bar" placeholder="내용을 입력해주세요(700자 이내)" maxlength=700 v-model="content"/>
-        </div>
-        <div class="board-create-file">
-          <span>{{ displayFileName }}</span>
-          <button type="button" @click="triggerFileInput">파일 업로드</button>
-          <input
-              type="file"
-              ref="fileInput"
-              @change="setUploadFiles"
-              accept="image/*"
-              multiple
-              style="display: none;"
-          />
-        </div>
-        <div class="board-create-content justify-end">
-          <button type="button"  @click="onCreateBoard">저장</button>
-          <button type="button" @click="moveToList">취소</button>
-        </div>
-      </form>
-    </section>
-  </div>
-</template>
 <script setup>
 import {useRouter} from "vue-router";
 import {onMounted, ref} from "vue";
@@ -107,15 +69,15 @@ function onCreateBoard() {
   })
       .catch((error)=>{
         if(error.response.status === 401){
-            Swal.fire({
-              icon: "error",
-              title: "로그인 시간 만료",
-              text: "로그인 시간이 만료됐습니다. 로그인 후 이용바랍니다.",
-            });
-            memberStore.logout();
-            router.push({
-              name: "MemberLogin",
-            })
+          Swal.fire({
+            icon: "error",
+            title: "로그인 시간 만료",
+            text: "로그인 시간이 만료됐습니다. 로그인 후 이용바랍니다.",
+          });
+          memberStore.logout();
+          router.push({
+            name: "MemberLogin",
+          })
         }else{
           Swal.fire({
             icon: "error",
@@ -127,6 +89,44 @@ function onCreateBoard() {
 
 }
 </script>
+<template>
+  <div class="board-container board-create-container pt-10">
+    <header>
+      <h1 class="text-white">게시글 쓰기</h1>
+    </header>
+    <section>
+      <form class="board-create-form">
+        <div class="board-create-content">
+          <input
+              type="text"
+              placeholder="제목을 입력해주세요.(최대 70자)"
+              v-model="title"
+              maxlength=70
+          >
+        </div>
+        <div class="board-create-content">
+          <textarea class="custom-scroll-bar" placeholder="내용을 입력해주세요(700자 이내)" maxlength=700 v-model="content"/>
+        </div>
+        <div class="board-create-file">
+          <span>{{ displayFileName }}</span>
+          <button type="button" @click="triggerFileInput">파일 업로드</button>
+          <input
+              type="file"
+              ref="fileInput"
+              @change="setUploadFiles"
+              accept="image/*"
+              multiple
+              style="display: none;"
+          />
+        </div>
+        <div class="board-create-content justify-end">
+          <button type="button"  @click="onCreateBoard">저장</button>
+          <button type="button" @click="moveToList">취소</button>
+        </div>
+      </form>
+    </section>
+  </div>
+</template>
 <style>
 .board-create-container {
   width: 100%;
