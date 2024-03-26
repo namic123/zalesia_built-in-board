@@ -15,6 +15,7 @@
     "@sweetalert2/themes": "^5.0.16",
     "axios": "^1.6.7",
     "core-js": "^3.8.3",
+    "lodash": "^4.17.21",
     "pinia": "^2.1.7",
     "pinia-plugin-persistedstate": "^3.2.1",
     "scrollreveal": "^4.0.9",
