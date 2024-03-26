@@ -64,6 +64,11 @@ function moveToLogin() {
       <textarea placeholder="로그인 후 이용바랍니다." disabled/>
       <button class="bg-blue-500" @click="moveToLogin">로그인</button>
     </div>
+    <div class="comment-list">
+      <div v-for="comment in commentList" :key="comment.id">
+        {{comment.content}}
+      </div>
+    </div>
   </div>
 </template>
 
