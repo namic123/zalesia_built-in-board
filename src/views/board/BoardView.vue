@@ -10,7 +10,7 @@ const router = useRouter();
 const id = route.params.id;
 const boardInfo = reactive({});
 const memberStore = useMemberStore();
-const memberId = memberStore.member.memberId;
+const memberId = memberStore.member?.memberId;
 const fileBox = ref(false);
 
 onMounted(() => {
@@ -19,7 +19,7 @@ onMounted(() => {
       .then(response => {
         Object.assign(boardInfo, response.data);
         console.log(boardInfo);
-        if(boardInfo.files !== null){
+        if (boardInfo.files !== null) {
           boardInfo.files
         }
       })
@@ -36,7 +36,7 @@ onMounted(() => {
 })
 
 /* 게시글 삭제 */
-function onBoardDelete(){
+function onBoardDelete() {
   Swal.fire({
     title: "정말로 삭제하시겠습니까?",
     text: "삭제 후, 영구적으로 복구가 불가합니다.",
@@ -45,20 +45,20 @@ function onBoardDelete(){
     confirmButtonColor: "#3085d6",
     cancelButtonColor: "#d33",
     confirmButtonText: "삭제",
-    cancelButtonText:"취소"
+    cancelButtonText: "취소"
   }).then((result) => {
     if (result.isConfirmed) {
       axios.delete(`/api/boards/${id}`)
-          .then(()=>{
+          .then(() => {
             Swal.fire({
               icon: "success",
               title: "삭제완료",
               text: "게시글이 성공적으로 삭제되었습니다."
             });
             router.push({
-              name:"BoardList"
+              name: "BoardList"
             })
-          }).catch(()=>{
+          }).catch(() => {
         Swal.fire({
           icon: "error",
           title: "이런...",
@@ -70,38 +70,39 @@ function onBoardDelete(){
 }
 
 /* 게시글 수정으로 이동*/
-function moveToBoardUpdate(){
+function moveToBoardUpdate() {
   router.push({
     name: "BoardUpdate",
-    params:id,
+    params: id,
   })
 }
 
 /* 파일명에서 UUID 제거 */
-function removeUUIDFromFilename(filename){
+function removeUUIDFromFilename(filename) {
   // UUID와 파일명 사이의 구분자 '_' 기준으로 분리
   const file = filename.split('_');
 
   // 분리된 배열에서 첫 번째 인덱스(UUID)를 제외 후 합침.
-  if(file.length > 1){
+  if (file.length > 1) {
     return file.slice(1).join('_');
-  }else{
+  } else {
     return filename;
   }
 }
+
 /* 파일 박스 핸들러*/
-function fileBoxHandler(){
+function fileBoxHandler() {
   fileBox.value = !fileBox.value;
 }
 
 /* 파일 다운로드 요청*/
-function downLoadFile(boardId, fileName){
+function downLoadFile(boardId, fileName) {
   axios({
     url: `/api/boards/download/${boardId}/${fileName}`,
-    method:'GET',
-    responseType:'blob',  // 응답 데이터 blob처리
+    method: 'GET',
+    responseType: 'blob',  // 응답 데이터 blob처리
     // Blob: 이진 데이터의 큰 덩어리를 다룰 때 사용되는 데이터 타입
-  }).then((response)=>{
+  }).then((response) => {
     // 다운로드 데이터 URL 객체로 저장
     const url = window.URL.createObjectURL(new Blob([response.data]));
     // 다운로드를 위한 url href
@@ -112,7 +113,7 @@ function downLoadFile(boardId, fileName){
     link.click();
     link.remove();
     window.URL.revokeObjectURL(url); // 활용 끝난 URL 해제
-  }).catch((error)=>{
+  }).catch((error) => {
     console.error(error);
   })
 }
@@ -138,8 +139,8 @@ function downLoadFile(boardId, fileName){
           <button class="text-red-400" @click="onBoardDelete">삭제</button>
         </footer>
         <div class="text-center mt-2">
-          첨부 파일<span class="text-blue-300 mr-2">({{boardInfo.files?.length}})</span>
-          <button class="text-blue-300" @click="fileBoxHandler">{{fileBox ? "닫기":"보기"}}</button>
+          첨부 파일<span class="text-blue-300 mr-2">({{ boardInfo.files?.length }})</span>
+          <button class="text-blue-300" @click="fileBoxHandler">{{ fileBox ? "닫기" : "보기" }}</button>
           <div v-if="fileBox">
             <ul>
               <li v-for="file in boardInfo.files" :key="file.id">
@@ -147,7 +148,7 @@ function downLoadFile(boardId, fileName){
                     class="text-blue-500 underline"
                     @click="downLoadFile(file.boardId, file.fileName)"
                 >
-                  {{removeUUIDFromFilename(file.fileName)}}
+                  {{ removeUUIDFromFilename(file.fileName) }}
                 </button>
               </li>
             </ul>
@@ -155,9 +156,13 @@ function downLoadFile(boardId, fileName){
         </div>
 
       </section>
-      <footer class="board-footer">
-        <textarea placeholder="댓글을 입력해주세요"/>
-        <button class="bg-blue-500">추가</button>
+      <footer class="board-footer" v-if="memberStore.member">
+          <textarea placeholder="댓글을 입력해주세요"/>
+          <button class="bg-blue-500">추가</button>
+      </footer>
+      <footer class="board-footer" v-else>
+        <textarea placeholder="로그인 후 이용바랍니다."/>
+        <button class="bg-blue-500">로그인</button>
       </footer>
     </div>
   </div>
@@ -226,22 +231,24 @@ function downLoadFile(boardId, fileName){
 }
 
 /* content 영역 끝 ---------------------------------------------------------------*/
-.board-footer{
+.board-footer {
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   padding-top: 2rem;
 }
-.board-footer textarea{
-  width:60%;
-  height:5rem;
+
+.board-footer textarea {
+  width: 60%;
+  height: 5rem;
   border-radius: 1rem;
-  padding:0.6rem;
+  padding: 0.6rem;
   margin-right: 1rem;
   margin-top: 0rem;
 }
-.board-footer > button{
+
+.board-footer > button {
   border-radius: 1rem;
   padding: 0.5rem 1rem;
 }
