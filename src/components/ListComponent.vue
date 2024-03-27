@@ -81,7 +81,7 @@ function moveToBoard(boardId) {
         </tr>
         </tbody>
       </table>
-      <div class="board-pagination">
+      <div class="pagination">
         <ul>
           <li>
             <button @click="fetchBoardList(currentPage -1)" :disabled="currentPage === 0">이전</button>
@@ -104,6 +104,8 @@ function moveToBoard(boardId) {
 </template>
 
 <style scoped>
+@import "@/assets/styles/pagination.css";
+
 .search-container {
   width: 100%;
   display: flex;
@@ -140,30 +142,4 @@ td {
   padding: 0.5rem 0rem;
 }
 
-/* pagination*/
-.board-pagination {
-  width: 100%;
-  display: flex;
-  margin-top: 0.5rem;
-  cursor: pointer;
-  justify-content: center;
-}
-
-ul {
-  display: flex;
-}
-
-.board-pagination > ul > li > button {
-  border: 1px solid white;
-  padding: 0.3rem 0.6rem;
-}
-
-.board-pagination > ul > li > button:disabled {
-  opacity: 0.7;
-}
-
-.currentPage {
-  background-color: white;
-  color: black;
-}
 </style>
