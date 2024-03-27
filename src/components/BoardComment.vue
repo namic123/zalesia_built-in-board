@@ -9,7 +9,7 @@ const props = defineProps({
   boardId: Number
 });
 onMounted(() => {
-  fetchCommentList();
+  fetchCommentList(currentPage.value);
 })
 
 const memberStore = useMemberStore();
@@ -18,15 +18,26 @@ const router = useRouter();
 let commentList = ref([]);
 let commentInputValue = ref("");
 
+// 댓글 편집 state
+let editingCommentId = ref(null); // 현재 편집 중인 댓글 ID
+let editingCommentContent = ref(""); // 편집 중인 댓글 내용
+
+
 // 페이징 state
 const currentPage = ref(0);   // 현재 페이지 번호 (0부터 시작)
 const totalPages = ref(0);    // 총 페이지 수
-const pageSize = ref(10);     // 페이지당 게시글 항목 수
+const pageSize = ref(5);     // 페이지당 게시글 항목 수
+// 페이징 그룹 처리
+const pageGroupSize = ref(5); // 그룹당 표시할 페이지 수
+const startPage = ref(1);  // 페이지 그룹의 시작 페이지 번호
 
-function fetchCommentList() {
-  axios.get(`/api/comments/${props.boardId}`)
+// Comment List 요청
+function fetchCommentList(page) {
+  axios.get(`/api/comments/${props.boardId}?page=${page}&size=${pageSize.value}`)
       .then((response) => {
-        commentList.value = response.data;
+        commentList.value = response.data.content;
+        totalPages.value = response.data.totalPages;
+        currentPage.value = response.data.number;
         console.log(commentList.value);
       })
       .catch((error) => {
@@ -34,9 +45,10 @@ function fetchCommentList() {
       })
 }
 
+// 댓글 생성 요청
 function onCreateComment() {
   console.log(commentInputValue.value);
-  axios.post(`/api/comments/${props.boardId}?page=${page}&size=${pageSize.value}`, {
+  axios.post(`/api/comments/${props.boardId}`, {
     content: commentInputValue.value,
     writer: memberStore.member?.memberId,
   }, {
@@ -45,29 +57,74 @@ function onCreateComment() {
     }
   }).then(() => {
     Swal.fire("댓글이 생성되었습니다!");
-    fetchCommentList();
     commentInputValue.value = "";
+    fetchCommentList(currentPage.value);
   }).catch((error) => {
-    if (error.response.status === 401) {
-      Swal.fire({
-        icon: "error",
-        title: "로그인 시간 만료",
-        text: "로그인 시간이 만료됐습니다. 로그인 후 이용바랍니다.",
-      });
-      memberStore.logout();
-      router.push({
-        name: "MemberLogin",
-      })
-    } else {
-      Swal.fire({
-        icon: "error",
-        title: "서버 장애",
-        text: "서버에 문제가 발생했습니다. 잠시 후 이용바랍니다.",
-      });
-    }
+    loginHandler(error);
   })
 }
 
+// 댓글 편집 상태 메서드
+function toggleComment(commentId, content) {
+  if (editingCommentId.value === commentId) {
+    // 편집 모드인 경우, 편집 모드 종료
+    editingCommentId.value = null;
+    editingCommentContent.value = "";
+  } else {
+    // 편집 모드 전환
+    editingCommentId.value = commentId;
+    editingCommentContent = content;
+  }
+}
+
+function onUpdateComment(commentId, content) {
+  axios.putForm(`/api/comments/${commentId}`, {
+    content: content
+  }, {
+    headers: {
+      "Authorization": memberStore.accessToken
+    }
+  }).then(() => {
+    Swal.fire("댓글이 수정되었습니다!");
+    toggleComment();
+    fetchCommentList(currentPage.value);
+  }).catch((error) => {
+    loginHandler(error);
+  });
+}
+
+function onDeleteComment(commentId){
+  axios.delete(`/api/comments/${commentId}`,{
+    headers: {
+      "Authorization": memberStore.accessToken
+    }
+  }).then(()=>{
+    Swal.fire("댓글이 삭제되었습니다!");
+    fetchCommentList(currentPage.value);
+  }).catch((error) => {
+    loginHandler(error);
+  });
+}
+
+function loginHandler(error){
+  if (error.response.status === 401) {
+    Swal.fire({
+      icon: "error",
+      title: "로그인 시간 만료",
+      text: "로그인 시간이 만료됐습니다. 로그인 후 이용바랍니다.",
+    });
+    memberStore.logout();
+    router.push({
+      name: "MemberLogin",
+    })
+  } else {
+    Swal.fire({
+      icon: "error",
+      title: "서버 장애",
+      text: "서버에 문제가 발생했습니다. 잠시 후 이용바랍니다.",
+    });
+  }
+}
 function moveToLogin() {
   router.push({
     name: "MemberLogin"
@@ -80,7 +137,7 @@ function moveToLogin() {
   <div class="board-comment-container">
     <div class="comment-input">
       <div v-if="memberStore.member">
-        <textarea placeholder="댓글을 입력해주세요" v-model="commentInputValue"/>
+        <textarea placeholder="댓글을 입력해주세요(최대 100자)" maxlength="100" v-model="commentInputValue"/>
         <button class="bg-blue-500" @click="onCreateComment">추가</button>
       </div>
       <div v-else>
@@ -99,29 +156,39 @@ function moveToLogin() {
           </div>
         </header>
         <section>
-          <div class="comment-content">
+          <div v-if="editingCommentId !== comment.id" class="comment-content">
             {{ comment.content }}
           </div>
+          <div v-else class="comment-content">
+            <textarea v-model="editingCommentContent" maxlength="100">
+            </textarea>
+          </div>
         </section>
-        <footer>
-          <button class="text-blue-300">수정</button>
-          <button class="text-red-400">삭제</button>
+        <footer v-if="memberStore.member?.memberId === comment.writer">
+          <div v-if="editingCommentId !== comment.id">
+            <button class="text-blue-300" @click="toggleComment(comment.id, comment.content)">수정</button>
+            <button class="text-red-400" @click="onDeleteComment(comment.id)">삭제</button>
+          </div>
+          <div v-else>
+            <button class="text-blue-300" @click="onUpdateComment(editingCommentId, editingCommentContent)">저장</button>
+            <button class="text-red-400" @click="toggleComment()">취소</button>
+          </div>
         </footer>
       </div>
-      <div class="comment-pagination">
+      <div class="pagination">
         <ul>
           <li>
-            <button @click="fetchBoardList(currentPage -1)" :disabled="currentPage === 0">이전</button>
+            <button @click="fetchCommentList(currentPage -1)" :disabled="currentPage === 0">이전</button>
           </li>
           <li
               v-for="page in [...Array(Math.max(0, Math.min(pageGroupSize, totalPages - startPage + 1))).keys()].map(i => i + startPage)"
               :key="page">
-            <button @click="fetchBoardList(page -1)" :class="{ currentPage: currentPage === page-1 }">
+            <button @click="fetchCommentList(page -1)" :class="{ currentPage: currentPage === page-1 }">
               {{ page }}
             </button>
           </li>
           <li>
-            <button @click="fetchBoardList(currentPage +1)" :disabled="currentPage >= totalPages -1">다음</button>
+            <button @click="fetchCommentList(currentPage +1)" :disabled="currentPage >= totalPages -1">다음</button>
 
           </li>
         </ul>
@@ -131,9 +198,11 @@ function moveToLogin() {
 </template>
 
 <style scoped>
+@import "@/assets/styles/pagination.css";
+
 .board-comment-container,
 .board-comment-container > .comment-input,
-.board-comment-container > .comment-input > div{
+.board-comment-container > .comment-input > div {
   width: 100%;
   display: flex;
   justify-content: center;
@@ -143,6 +212,7 @@ function moveToLogin() {
   flex-direction: column;
 }
 
+/* -- 댓글 입력*/
 .comment-input {
   width: 100%;
   margin-bottom: 1rem;
@@ -157,11 +227,13 @@ function moveToLogin() {
   margin-top: 0rem;
 }
 
-.board-comment-container button {
+.comment-input button,
+.comment-list button {
   border-radius: 1rem;
   padding: 0.5rem 1rem;
 }
 
+/* -- 댓글 리스트*/
 .comment {
   width: 100%;
   padding: 0.5rem 1rem;
@@ -208,6 +280,10 @@ function moveToLogin() {
 
 .comment > footer > button {
   border-bottom: 1px solid #bdbdbd;
+}
+
+.comment-content > textarea {
+  width: 100%;
 }
 
 </style>
