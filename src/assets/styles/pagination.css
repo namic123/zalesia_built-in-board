@@ -1,0 +1,26 @@
+/* pagination*/
+.pagination {
+    width: 100%;
+    display: flex;
+    margin-top: 0.5rem;
+    cursor: pointer;
+    justify-content: center;
+}
+
+ul {
+    display: flex;
+}
+
+.pagination > ul > li > button {
+    border: 1px solid white;
+    padding: 0.3rem 0.6rem;
+}
+
+.pagination > ul > li > button:disabled {
+    opacity: 0.7;
+}
+
+.currentPage {
+    background-color: white;
+    color: black;
+}
