@@ -7,11 +7,16 @@
           <input type="text" placeholder="아이디를 입력해주세요." v-model="memberId">
           <input type="password" placeholder="비밀번호를 입력해주세요" v-model="password">
         </div>
-        <div>
+        <div class="login">
           <button type="button" @click="handleLogin">로그인</button>
+        </div>
+        <div class="social-login">
+          <button @click.stop="handleSocialLogin()"><img src="@/assets/images/social/naver.png"></button>
+          <button @click="handleSocialLogin('google')"><img src="@/assets/images/social/google.png"></button>
         </div>
       </form>
     </div>
+    <a href="http://localhost:8090/oauth2/authorization/naver">네이버 소셜 로그인 테스트</a>
     <div class="member-login-footer mt-2">
       <button>아이디 찾기</button>
       <button>비밀번호 찾기</button>
@@ -44,6 +49,9 @@ function signupModalHandler() {
   signupModal.value = !signupModal.value;
 }
 
+function handleSocialLogin(){
+  window.location.href = "http://localhost:8090/oauth2/authorization/naver";
+}
 function handleLogin() {
   const data = new URLSearchParams();
   data.append('username', memberId.value);
@@ -78,7 +86,6 @@ function handleLogin() {
     password.value = "";
   })
 }
-
 </script>
 
 <style scoped>
@@ -89,9 +96,6 @@ button {
   color: white;
 }
 
-.member-login-form button {
-  background-image: var(--main-gradient);
-}
 
 .member-login-container {
   display: flex;
@@ -116,7 +120,8 @@ button {
   font-size: 2rem;
 }
 
-.member-login-form > form > div {
+.member-login-form > form > div:first-child,
+.member-login-form > form > div:nth-child(2) {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -130,6 +135,21 @@ button {
   height: 2.2rem;
   min-width: 300px;
   border-radius: 1rem;
+}
+
+.member-login-form .login > button {
+  background-image: var(--main-gradient);
+}
+
+
+.social-login {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.social-login img {
+  width: 3rem;
 }
 
 .member-login-footer > button:nth-child(2) {
