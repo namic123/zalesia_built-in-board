@@ -5,6 +5,7 @@ import BoardView from "@/views/board/BoardView.vue";
 import BoardList from "@/views/board/BoardList.vue";
 import HomeView from "@/views/HomeView.vue";
 import BoardUpdate from "@/views/board/BoardUpdate.vue";
+import LoginSuccessValidation from "@/views/member/LoginSuccessValidation.vue";
 
 const router = createRouter({
     history:createWebHistory(),
@@ -38,6 +39,11 @@ const router = createRouter({
             path:'/member/login',
             name:'MemberLogin',
             component:MemberLogin
+        },
+        {
+            path:'/member/login/validation',
+            name:'LoginSuccessValidation',
+            component:LoginSuccessValidation
         }
     ]
 })

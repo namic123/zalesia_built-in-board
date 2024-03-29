@@ -23,6 +23,7 @@
     "typed.js": "^2.1.0",
     "vue": "^3.4.21",
     "vue-router": "^4.3.0",
+    "vue3-spinners": "^1.2.2",
     "vuex": "^4.0.2",
     "vuex-persistedstate": "^4.1.0"
   },

@@ -11,12 +11,11 @@
           <button type="button" @click="handleLogin">로그인</button>
         </div>
         <div class="social-login">
-          <button @click.stop="handleSocialLogin()"><img src="@/assets/images/social/naver.png"></button>
-          <button @click="handleSocialLogin('google')"><img src="@/assets/images/social/google.png"></button>
+          <button type="button" @click.stop="handleSocialLogin('naver')"><img src="@/assets/images/social/naver.png"></button>
+          <button type="button" @click.stop="handleSocialLogin('google')"><img src="@/assets/images/social/google.png"></button>
         </div>
       </form>
     </div>
-    <a href="http://localhost:8090/oauth2/authorization/naver">네이버 소셜 로그인 테스트</a>
     <div class="member-login-footer mt-2">
       <button>아이디 찾기</button>
       <button>비밀번호 찾기</button>
@@ -29,12 +28,11 @@
 </template>
 <script setup>
 import MemberSignUp from "@/components/SignUp.vue";
-import {ref} from "vue";
+import { ref} from "vue";
 import axios from "axios";
 import Swal from "sweetalert2";
 import {useRouter} from "vue-router";
 import {useMemberStore} from "@/store";
-
 
 const router = useRouter();
 /* 로그인 관련 상태*/
@@ -49,8 +47,8 @@ function signupModalHandler() {
   signupModal.value = !signupModal.value;
 }
 
-function handleSocialLogin(){
-  window.location.href = "http://localhost:8090/oauth2/authorization/naver";
+function handleSocialLogin(domain){
+  window.location.href = `http://localhost:8090/oauth2/authorization/${domain}`;
 }
 function handleLogin() {
   const data = new URLSearchParams();
@@ -64,7 +62,6 @@ function handleLogin() {
     }
   }).then((response) => {
     memberStore.member = response.data;
-    memberStore.accessToken = response.headers.getAuthorization();
     Swal.fire({
       title: "로그인 성공!",
       text: "게시글 목록으로 이동합니다.",

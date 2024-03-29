@@ -26,9 +26,8 @@ const nickname = computed(() => memberStore.member?.nickname);
 function handleLogout(){
     memberStore.$patch({
       member: null,
-      accessToken: null,
     })
-  localStorage.clear();
+  memberStore.logout()
 }
 </script>
 
