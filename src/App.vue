@@ -27,7 +27,7 @@ function handleLogout(){
     memberStore.$patch({
       member: null,
     })
-  memberStore.logout()
+  memberStore.logout();
 }
 </script>
 

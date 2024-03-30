@@ -19,10 +19,11 @@ function loadMemberInfo() {
       .then(response => {
         memberStore.member
             = {
-          memberId : response.data.memberId,
-          nickname : response.data.nickname,
-          role : response.data.role,
+          memberId : response.data.member.memberId,
+          nickname : response.data.member.nickname,
+          role : response.data.member.role,
         }
+        memberStore.oauth2AccessToken = response.data.oauth2AccessToken;
         Swal.fire({
           title: "로그인 성공!",
           text: "게시글 목록으로 이동합니다.",
