@@ -13,6 +13,7 @@
         <div class="social-login">
           <button type="button" @click.stop="handleSocialLogin('naver')"><img src="@/assets/images/social/naver.png"></button>
           <button type="button" @click.stop="handleSocialLogin('google')"><img src="@/assets/images/social/google.png"></button>
+          <button type="button" @click.stop="handleSocialLogin('kakao')"><img src="@/assets/images/social/kakao.png"></button>
         </div>
       </form>
     </div>
