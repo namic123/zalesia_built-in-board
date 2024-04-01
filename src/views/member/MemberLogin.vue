@@ -14,6 +14,7 @@
           <button type="button" @click.stop="handleSocialLogin('naver')"><img src="@/assets/images/social/naver.png"></button>
           <button type="button" @click.stop="handleSocialLogin('google')"><img src="@/assets/images/social/google.png"></button>
           <button type="button" @click.stop="handleSocialLogin('kakao')"><img src="@/assets/images/social/kakao.png"></button>
+          <button class="github" type="button" @click.stop="handleSocialLogin('github')"><img src="@/assets/images/social/github.png"></button>
         </div>
       </form>
     </div>
@@ -63,6 +64,7 @@ function handleLogin() {
     }
   }).then((response) => {
     memberStore.member = response.data;
+    localStorage.setItem("accessToken",response.headers.get("Authorization"));
     Swal.fire({
       title: "로그인 성공!",
       text: "게시글 목록으로 이동합니다.",
@@ -149,7 +151,10 @@ button {
 .social-login img {
   width: 3rem;
 }
-
+.github > img{
+  background-color: white;
+  border-radius: 50%;
+}
 .member-login-footer > button:nth-child(2) {
   border-left: 1px solid white;
   border-right: 1px solid white;

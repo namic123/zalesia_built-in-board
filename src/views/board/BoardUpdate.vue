@@ -4,6 +4,7 @@ import {onMounted, onUpdated, reactive} from "vue";
 import axios from "axios";
 import Swal from "sweetalert2";
 import {useMemberStore} from "@/store";
+import api from "@/service/axios";
 
 const route = useRoute();
 const router = useRouter();
@@ -49,7 +50,7 @@ onUpdated(()=>{
   }
 });
 function onUpdateBoard(){
-  axios.putForm(`/api/boards/${id}`,{
+  api.putForm(`/api/boards/${id}`,{
     title:boardInfo.title,
     content:boardInfo.content,
   })

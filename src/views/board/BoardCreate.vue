@@ -4,6 +4,7 @@ import {onMounted, ref} from "vue";
 import axios from "axios";
 import Swal from "sweetalert2";
 import {useMemberStore} from "@/store";
+import api from "@/service/axios";
 
 onMounted(()=>{
   if(memberStore.accessToken === null){
@@ -54,7 +55,7 @@ function setUploadFiles(event) {
 
 function onCreateBoard() {
   writer.value = memberStore.member?.memberId;
-  axios.postForm('/api/boards', {
+  api.postForm('/api/boards', {
     title: title.value,
     content: content.value,
     writer: writer.value,

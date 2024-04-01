@@ -5,6 +5,7 @@ import {onMounted, reactive, ref} from "vue";
 import Swal from "sweetalert2";
 import {useMemberStore} from "@/store";
 import BoardComment from "@/components/BoardComment.vue";
+import api from "@/service/axios";
 
 const route = useRoute();
 const router = useRouter();
@@ -12,6 +13,7 @@ const id = route.params.id;
 const boardInfo = reactive({});
 const memberStore = useMemberStore();
 const memberId = memberStore.member?.memberId;
+const accessToken = memberStore.accessToken;
 const fileBox = ref(false);
 
 onMounted(() => {
@@ -49,7 +51,11 @@ function onBoardDelete() {
     cancelButtonText: "취소"
   }).then((result) => {
     if (result.isConfirmed) {
-      axios.delete(`/api/boards/${id}`)
+      api.delete(`/api/boards/${id}`,{
+        headers:{
+          "Authorization": accessToken,
+        }
+      })
           .then(() => {
             Swal.fire({
               icon: "success",

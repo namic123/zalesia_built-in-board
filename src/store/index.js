@@ -1,6 +1,6 @@
 import {defineStore} from "pinia";
-import axios from "axios";
 import Swal from "sweetalert2";
+import axios from "axios";
 
 export const useMemberStore = defineStore('member', {
         state: () => ({
@@ -9,12 +9,12 @@ export const useMemberStore = defineStore('member', {
         }),
         getters: {
             isLoggedIn: (state) => {
-                return state.member != null
+                return state.member != null;
             },
         },
         actions: {
             logout() {
-                this.member = null;
+                localStorage.clear();
                 axios.post('/api/members/logout')
                     .then(() => {
                         Swal.fire({
@@ -22,7 +22,6 @@ export const useMemberStore = defineStore('member', {
                             text: "로그아웃 처리되었습니다.",
                             icon: "warning"
                         });
-
                     });
             }
         },

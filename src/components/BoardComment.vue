@@ -4,6 +4,7 @@ import {useRouter} from "vue-router";
 import {onMounted, ref} from "vue";
 import axios from "axios";
 import Swal from "sweetalert2";
+import api from "@/service/axios";
 
 const props = defineProps({
   boardId: Number
@@ -48,7 +49,7 @@ function fetchCommentList(page) {
 // 댓글 생성 요청
 function onCreateComment() {
   console.log(commentInputValue.value);
-  axios.post(`/api/comments/${props.boardId}`, {
+  api.post(`/api/comments/${props.boardId}`, {
     content: commentInputValue.value,
     writer: memberStore.member?.memberId,
   }, {
@@ -78,7 +79,7 @@ function toggleComment(commentId, content) {
 }
 
 function onUpdateComment(commentId, content) {
-  axios.putForm(`/api/comments/${commentId}`, {
+  api.putForm(`/api/comments/${commentId}`, {
     content: content
   }, {
     headers: {
@@ -94,7 +95,7 @@ function onUpdateComment(commentId, content) {
 }
 
 function onDeleteComment(commentId){
-  axios.delete(`/api/comments/${commentId}`,{
+  api.delete(`/api/comments/${commentId}`,{
     headers: {
       "Authorization": memberStore.accessToken
     }
