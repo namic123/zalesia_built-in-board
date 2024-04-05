@@ -98,7 +98,7 @@
 
 import {computed, ref, watch} from "vue";
 import Swal from "sweetalert2";
-import {defaultAxios} from "@/service/axios";
+import axios from "axios";
 
 const emit = defineEmits(['onCloseModal']);
 /*------------------------ 상태 영역 --------------------------------------*/
@@ -242,7 +242,7 @@ function onCloseModal() {
 // 닉네임 중복 체크
 function checkNicknameDuplicates() {
   console.log(nickname.value);
-  defaultAxios.get('/api/members/check/nickname', {
+  axios.get('/api/members/check/nickname', {
     params: {
       nickname: nickname.value,
     }
@@ -264,7 +264,7 @@ function checkNicknameDuplicates() {
 
 // 닉네임 중복 체크
 function checkMemberIdDuplicates() {
-  defaultAxios.get('/api/members/check/memberId', {
+  axios.get('/api/members/check/memberId', {
     params: {
       memberId: memberId.value,
     }
@@ -287,7 +287,7 @@ function checkMemberIdDuplicates() {
 
 // 닉네임 중복 체크
 function checkEmailDuplicates() {
-  defaultAxios.get('/api/members/check/email', {
+  axios.get('/api/members/check/email', {
     params: {
       email: email.value,
     }
@@ -349,7 +349,7 @@ watch(memberId, () => {
 /* --------------------------- 계정 생성 ----------------------------------*/
 function createMemberAccount() {
   isValidateAllFormSuccess.value = false;
-  defaultAxios.post('/api/members/create', {
+  axios.post('/api/members/create', {
     name: name.value,
     nickname: nickname.value,
     email: email.value,

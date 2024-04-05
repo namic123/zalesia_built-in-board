@@ -6,7 +6,7 @@ import {useMemberStore} from "@/store";
 import api from "@/service/axios";
 
 onMounted(()=>{
-  if(memberStore.accessToken === null){
+  if(memberStore.member === null){
     Swal.fire({
       icon: "error",
       title: "잘못된 접근",

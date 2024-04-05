@@ -6,7 +6,7 @@ import {onMounted} from "vue";
 import {useMemberStore} from "@/store";
 import Swal from "sweetalert2";
 import {useRouter} from "vue-router";
-import {defaultAxios} from "@/service/axios";
+import axios from "axios";
 
 onMounted(() => {
   loadMemberInfo();
@@ -15,7 +15,7 @@ const router = useRouter();
 
 const memberStore = useMemberStore();
 function loadMemberInfo() {
-  defaultAxios.get('/api/members/validation')
+  axios.get('/api/members/validation')
       .then(response => {
         memberStore.member
             = {

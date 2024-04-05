@@ -34,7 +34,7 @@ import { ref} from "vue";
 import Swal from "sweetalert2";
 import {useRouter} from "vue-router";
 import {useMemberStore} from "@/store";
-import {defaultAxios} from "@/service/axios";
+import axios from "axios";
 
 const router = useRouter();
 /* 로그인 관련 상태*/
@@ -50,7 +50,7 @@ function signupModalHandler() {
 }
 
 function handleSocialLogin(domain){
-  window.location.href = `http://220.220.220.79:8090/oauth2/authorization/${domain}`;
+  window.location.href = `http://localhost:8090/oauth2/authorization/${domain}`;
 }
 function handleLogin() {
   const data = new URLSearchParams();
@@ -58,12 +58,13 @@ function handleLogin() {
   data.append('password', password.value);
 
   // 토큰 생성과 안정성 멱등성의 이유로 POST 요청을 사용
-  defaultAxios.post('/api/members/login', data, {
+  axios.post('/api/members/login', data, {
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
     }
   }).then((response) => {
     memberStore.member = response.data;
+    console.log(response.headers.get("Authorization"))
     localStorage.setItem("accessToken",response.headers.get("Authorization"));
     Swal.fire({
       title: "로그인 성공!",

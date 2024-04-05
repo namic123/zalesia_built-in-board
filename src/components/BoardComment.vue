@@ -3,7 +3,8 @@ import {useMemberStore} from "@/store";
 import {useRouter} from "vue-router";
 import {onMounted, ref} from "vue";
 import Swal from "sweetalert2";
-import api, {defaultAxios} from "@/service/axios";
+import api from "@/service/axios";
+import axios from "axios";
 
 const props = defineProps({
   boardId: Number
@@ -33,7 +34,7 @@ const startPage = ref(1);  // 페이지 그룹의 시작 페이지 번호
 
 // Comment List 요청
 function fetchCommentList(page) {
-  defaultAxios.get(`/api/comments/${props.boardId}?page=${page}&size=${pageSize.value}`)
+  axios.get(`/api/comments/${props.boardId}?page=${page}&size=${pageSize.value}`)
       .then((response) => {
         commentList.value = response.data.content;
         totalPages.value = response.data.totalPages;
