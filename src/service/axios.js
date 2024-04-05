@@ -1,7 +1,12 @@
 import axios from 'axios';
+export const defaultAxios = axios.create({
+    baseURL: process.env.VUE_APP_API_BASE_URL,
+    timeout: 3000,
+});
+
 // Axios 인스턴스 생성
 const api = axios.create({
-    baseURL: 'http://localhost:8090',
+    baseURL: process.env.VUE_APP_API_BASE_URL,
     timeout: 3000,
 });
 
@@ -29,7 +34,7 @@ api.interceptors.response.use(
             try {
                 // 토큰 재발급 요청
                 const response =
-                    await axios.post('/api/reissue');
+                    await defaultAxios.post('/api/reissue');
                 const newAccessToken = response.headers.get('Authorization');
 
                 console.log("토큰 재발급 완료, 새로 발급된 토큰 =", newAccessToken);

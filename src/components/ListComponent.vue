@@ -1,8 +1,8 @@
 <script setup>
-import axios from "axios";
 import {onMounted, ref, watch} from "vue";
 import {useRouter} from "vue-router";
 import _ from "lodash";
+import {defaultAxios} from "@/service/axios";
 
 let boardList = ref([]);
 const router = useRouter();
@@ -17,7 +17,7 @@ const startPage = ref(1);  // 페이지 그룹의 시작 페이지 번호
 
 // board list 요청
 function fetchBoardList(page) {
-  axios.get(`/api/boards?page=${page}&size=${pageSize.value}&search=${searchQuery.value}`)
+  defaultAxios.get(`/api/boards?page=${page}&size=${pageSize.value}&search=${searchQuery.value}`)
       .then((response) => {
         boardList.value = response.data.content; // board list 목록
         totalPages.value = response.data.totalPages; // 총 페이지 수 업데이트

@@ -31,10 +31,10 @@
 <script setup>
 import MemberSignUp from "@/components/SignUp.vue";
 import { ref} from "vue";
-import axios from "axios";
 import Swal from "sweetalert2";
 import {useRouter} from "vue-router";
 import {useMemberStore} from "@/store";
+import {defaultAxios} from "@/service/axios";
 
 const router = useRouter();
 /* 로그인 관련 상태*/
@@ -50,7 +50,7 @@ function signupModalHandler() {
 }
 
 function handleSocialLogin(domain){
-  window.location.href = `http://localhost:8090/oauth2/authorization/${domain}`;
+  window.location.href = `http://220.220.220.79:8090/oauth2/authorization/${domain}`;
 }
 function handleLogin() {
   const data = new URLSearchParams();
@@ -58,7 +58,7 @@ function handleLogin() {
   data.append('password', password.value);
 
   // 토큰 생성과 안정성 멱등성의 이유로 POST 요청을 사용
-  axios.post('/api/members/login', data, {
+  defaultAxios.post('/api/members/login', data, {
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
     }

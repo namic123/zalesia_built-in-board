@@ -1,7 +1,6 @@
 <script setup>
 import {useRoute, useRouter} from "vue-router";
 import {onMounted, onUpdated, reactive} from "vue";
-import axios from "axios";
 import Swal from "sweetalert2";
 import {useMemberStore} from "@/store";
 import api from "@/service/axios";
@@ -12,7 +11,7 @@ const id = route.params.id;
 const boardInfo = reactive({});
 const memberStore = useMemberStore();
 onMounted(() => {
-  axios.get(`/api/boards/${id}`)
+  api.get(`/api/boards/${id}`)
       .then(response => {
         Object.assign(boardInfo, response.data);
         console.log(boardInfo);

@@ -1,7 +1,6 @@
 <script setup>
 import {useRouter} from "vue-router";
 import {onMounted, ref} from "vue";
-import axios from "axios";
 import Swal from "sweetalert2";
 import {useMemberStore} from "@/store";
 import api from "@/service/axios";

@@ -1,11 +1,10 @@
 <script setup>
 import {useRoute, useRouter} from "vue-router";
-import axios from "axios";
 import {onMounted, reactive, ref} from "vue";
 import Swal from "sweetalert2";
 import {useMemberStore} from "@/store";
 import BoardComment from "@/components/BoardComment.vue";
-import api from "@/service/axios";
+import api, {defaultAxios} from "@/service/axios";
 
 const route = useRoute();
 const router = useRouter();
@@ -18,7 +17,7 @@ const fileBox = ref(false);
 
 onMounted(() => {
   /* 게시글 가져오기 */
-  axios.get(`/api/boards/${id}`)
+  defaultAxios.get(`/api/boards/${id}`)
       .then(response => {
         Object.assign(boardInfo, response.data);
         console.log(boardInfo);
@@ -104,7 +103,7 @@ function fileBoxHandler() {
 
 /* 파일 다운로드 요청*/
 function downLoadFile(boardId, fileName) {
-  axios({
+  defaultAxios({
     url: `/api/boards/download/${boardId}/${fileName}`,
     method: 'GET',
     responseType: 'blob',  // 응답 데이터 blob처리

@@ -3,10 +3,10 @@ import {
   VueSpinnerIos,
 } from 'vue3-spinners';
 import {onMounted} from "vue";
-import axios from "axios";
 import {useMemberStore} from "@/store";
 import Swal from "sweetalert2";
 import {useRouter} from "vue-router";
+import {defaultAxios} from "@/service/axios";
 
 onMounted(() => {
   loadMemberInfo();
@@ -15,7 +15,7 @@ const router = useRouter();
 
 const memberStore = useMemberStore();
 function loadMemberInfo() {
-  axios.get('/api/members/validation')
+  defaultAxios.get('/api/members/validation')
       .then(response => {
         memberStore.member
             = {
